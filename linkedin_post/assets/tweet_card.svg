@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0D0D1A" />
+      <stop offset="100%" style="stop-color:#1A0D2E" />
+    </linearGradient>
+    <linearGradient id="c1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF8C42;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#FF8C42;stop-opacity:0.04" />
+    </linearGradient>
+    <linearGradient id="c2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7B61FF;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#7B61FF;stop-opacity:0.04" />
+    </linearGradient>
+    <linearGradient id="c3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00C2A8;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#00C2A8;stop-opacity:0.04" />
+    </linearGradient>
+    <linearGradient id="c4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF5FA0;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#FF5FA0;stop-opacity:0.04" />
+    </linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="60"/></filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="675" fill="url(#bg)"/>
+
+  <!-- Ambient blobs -->
+  <circle cx="150" cy="120" r="180" fill="#FF8C42" opacity="0.07" filter="url(#soft)"/>
+  <circle cx="1050" cy="550" r="200" fill="#7B61FF" opacity="0.07" filter="url(#soft)"/>
+
+  <!-- HEADER logo -->
+  <polygon points="60,20 86,64 34,64" fill="none" stroke="#FF8C42" stroke-width="2.5"/>
+  <text x="60" y="52" font-family="Arial" font-size="15" font-weight="bold" fill="#FF8C42" text-anchor="middle">A</text>
+  <text x="100" y="54" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="5" fill="#FF8C42" opacity="0.8">CLAUDE API</text>
+
+  <!-- Title -->
+  <text x="600" y="108" font-family="Arial, sans-serif" font-size="44" font-weight="900" fill="white" text-anchor="middle">Utiliser Claude comme un pro</text>
+  <text x="600" y="145" font-family="Arial, sans-serif" font-size="20" fill="#A8B8D0" text-anchor="middle">4 techniques simples — expliquées en clair</text>
+  <line x1="440" y1="164" x2="760" y2="164" stroke="#FF8C42" stroke-opacity="0.3" stroke-width="1"/>
+
+  <!-- ══════════════ CARD 1 — Cache ══════════════ -->
+  <rect x="40" y="185" width="265" height="400" rx="20" fill="url(#c1)"/>
+  <rect x="40" y="185" width="265" height="400" rx="20" fill="none" stroke="#FF8C42" stroke-opacity="0.35" stroke-width="1.5"/>
+
+  <!-- Icon: coin/money — circle with $ -->
+  <circle cx="172" cy="248" r="36" fill="#FF8C42" fill-opacity="0.2" stroke="#FF8C42" stroke-opacity="0.5" stroke-width="2"/>
+  <text x="172" y="258" font-family="Arial" font-size="30" font-weight="900" fill="#FF8C42" text-anchor="middle">$</text>
+
+  <text x="172" y="312" font-family="Arial, sans-serif" font-size="20" font-weight="800" fill="#FF8C42" text-anchor="middle">Cache</text>
+  <text x="172" y="342" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle" opacity="0.9">Vous répétez souvent</text>
+  <text x="172" y="360" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle" opacity="0.9">le même texte ?</text>
+  <text x="172" y="390" font-family="Arial, sans-serif" font-size="14" fill="#A8C0D0" text-anchor="middle">Claude le mémorise</text>
+  <text x="172" y="408" font-family="Arial, sans-serif" font-size="14" fill="#A8C0D0" text-anchor="middle">côté serveur.</text>
+
+  <rect x="82" y="432" width="180" height="38" rx="19" fill="#FF8C42" fill-opacity="0.25" stroke="#FF8C42" stroke-opacity="0.6" stroke-width="1.5"/>
+  <text x="172" y="456" font-family="Arial, sans-serif" font-size="17" font-weight="800" fill="#FF8C42" text-anchor="middle">-90% de coût</text>
+
+  <text x="172" y="520" font-family="Arial, sans-serif" font-size="13" fill="#A8B8D0" text-anchor="middle" opacity="0.7">Facturé une seule fois,</text>
+  <text x="172" y="538" font-family="Arial, sans-serif" font-size="13" fill="#A8B8D0" text-anchor="middle" opacity="0.7">réutilisé à l'infini.</text>
+
+  <!-- ══════════════ CARD 2 — Streaming ══════════════ -->
+  <rect x="325" y="185" width="265" height="400" rx="20" fill="url(#c2)"/>
+  <rect x="325" y="185" width="265" height="400" rx="20" fill="none" stroke="#7B61FF" stroke-opacity="0.35" stroke-width="1.5"/>
+
+  <!-- Icon: lightning bolt -->
+  <circle cx="457" cy="248" r="36" fill="#7B61FF" fill-opacity="0.2" stroke="#7B61FF" stroke-opacity="0.5" stroke-width="2"/>
+  <polygon points="462,218 445,252 458,252 452,278 469,244 456,244" fill="#A99FFF"/>
+
+  <text x="457" y="312" font-family="Arial, sans-serif" font-size="20" font-weight="800" fill="#A99FFF" text-anchor="middle">Streaming</text>
+  <text x="457" y="342" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle" opacity="0.9">Fini l'écran blanc</text>
+  <text x="457" y="360" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle" opacity="0.9">qui tourne 10 sec.</text>
+  <text x="457" y="390" font-family="Arial, sans-serif" font-size="14" fill="#A8C0D0" text-anchor="middle">Les mots s'affichent</text>
+  <text x="457" y="408" font-family="Arial, sans-serif" font-size="14" fill="#A8C0D0" text-anchor="middle">mot par mot en direct.</text>
+
+  <rect x="367" y="432" width="180" height="38" rx="19" fill="#7B61FF" fill-opacity="0.25" stroke="#7B61FF" stroke-opacity="0.6" stroke-width="1.5"/>
+  <text x="457" y="456" font-family="Arial, sans-serif" font-size="17" font-weight="800" fill="#A99FFF" text-anchor="middle">5x plus rapide</text>
+
+  <text x="457" y="520" font-family="Arial, sans-serif" font-size="13" fill="#A8B8D0" text-anchor="middle" opacity="0.7">Comme lire un message</text>
+  <text x="457" y="538" font-family="Arial, sans-serif" font-size="13" fill="#A8B8D0" text-anchor="middle" opacity="0.7">qui s'écrit en direct.</text>
+
+  <!-- ══════════════ CARD 3 — Outils ══════════════ -->
+  <rect x="610" y="185" width="265" height="400" rx="20" fill="url(#c3)"/>
+  <rect x="610" y="185" width="265" height="400" rx="20" fill="none" stroke="#00C2A8" stroke-opacity="0.35" stroke-width="1.5"/>
+
+  <!-- Icon: wrench/gear -->
+  <circle cx="742" cy="248" r="36" fill="#00C2A8" fill-opacity="0.2" stroke="#00C2A8" stroke-opacity="0.5" stroke-width="2"/>
+  <!-- gear shape -->
+  <circle cx="742" cy="248" r="11" fill="none" stroke="#5EE8D8" stroke-width="3"/>
+  <circle cx="742" cy="248" r="4" fill="#5EE8D8"/>
+  <rect x="739" y="222" width="6" height="10" rx="3" fill="#5EE8D8"/>
+  <rect x="739" y="264" width="6" height="10" rx="3" fill="#5EE8D8"/>
+  <rect x="716" y="245" width="10" height="6" rx="3" fill="#5EE8D8"/>
+  <rect x="758" y="245" width="10" height="6" rx="3" fill="#5EE8D8"/>
+  <rect x="722" y="229" width="10" height="6" rx="3" fill="#5EE8D8" transform="rotate(45 727 232)"/>
+  <rect x="752" y="229" width="10" height="6" rx="3" fill="#5EE8D8" transform="rotate(-45 757 232)"/>
+  <rect x="722" y="261" width="10" height="6" rx="3" fill="#5EE8D8" transform="rotate(-45 727 264)"/>
+  <rect x="752" y="261" width="10" height="6" rx="3" fill="#5EE8D8" transform="rotate(45 757 264)"/>
+
+  <text x="742" y="312" font-family="Arial, sans-serif" font-size="20" font-weight="800" fill="#5EE8D8" text-anchor="middle">Outils</text>
+  <text x="742" y="342" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle" opacity="0.9">Claude peut appeler</text>
+  <text x="742" y="360" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle" opacity="0.9">vos propres fonctions.</text>
+  <text x="742" y="390" font-family="Arial, sans-serif" font-size="14" fill="#A8C0D0" text-anchor="middle">Recherche, calcul,</text>
+  <text x="742" y="408" font-family="Arial, sans-serif" font-size="14" fill="#A8C0D0" text-anchor="middle">API… il gère tout.</text>
+
+  <rect x="652" y="432" width="180" height="38" rx="19" fill="#00C2A8" fill-opacity="0.2" stroke="#00C2A8" stroke-opacity="0.6" stroke-width="1.5"/>
+  <text x="742" y="456" font-family="Arial, sans-serif" font-size="17" font-weight="800" fill="#5EE8D8" text-anchor="middle">Agent autonome</text>
+
+  <text x="742" y="520" font-family="Arial, sans-serif" font-size="13" fill="#A8B8D0" text-anchor="middle" opacity="0.7">Il décide quoi faire</text>
+  <text x="742" y="538" font-family="Arial, sans-serif" font-size="13" fill="#A8B8D0" text-anchor="middle" opacity="0.7">et le fait pour vous.</text>
+
+  <!-- ══════════════ CARD 4 — En masse ══════════════ -->
+  <rect x="895" y="185" width="265" height="400" rx="20" fill="url(#c4)"/>
+  <rect x="895" y="185" width="265" height="400" rx="20" fill="none" stroke="#FF5FA0" stroke-opacity="0.35" stroke-width="1.5"/>
+
+  <!-- Icon: stack of files -->
+  <circle cx="1027" cy="248" r="36" fill="#FF5FA0" fill-opacity="0.2" stroke="#FF5FA0" stroke-opacity="0.5" stroke-width="2"/>
+  <rect x="1010" y="228" width="28" height="34" rx="3" fill="none" stroke="#FF9FC8" stroke-width="2.5"/>
+  <line x1="1016" y1="238" x2="1032" y2="238" stroke="#FF9FC8" stroke-width="2" opacity="0.7"/>
+  <line x1="1016" y1="246" x2="1032" y2="246" stroke="#FF9FC8" stroke-width="2" opacity="0.7"/>
+  <line x1="1016" y1="254" x2="1032" y2="254" stroke="#FF9FC8" stroke-width="2" opacity="0.7"/>
+  <!-- stacked pages shadow -->
+  <rect x="1006" y="232" width="28" height="34" rx="3" fill="none" stroke="#FF5FA0" stroke-width="1.5" opacity="0.4"/>
+  <rect x="1002" y="236" width="28" height="34" rx="3" fill="none" stroke="#FF5FA0" stroke-width="1" opacity="0.25"/>
+
+  <text x="1027" y="312" font-family="Arial, sans-serif" font-size="20" font-weight="800" fill="#FF9FC8" text-anchor="middle">En masse</text>
+  <text x="1027" y="342" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle" opacity="0.9">1 000 documents</text>
+  <text x="1027" y="360" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle" opacity="0.9">à analyser d'un coup ?</text>
+  <text x="1027" y="390" font-family="Arial, sans-serif" font-size="14" fill="#A8C0D0" text-anchor="middle">Envoyez tout en une fois,</text>
+  <text x="1027" y="408" font-family="Arial, sans-serif" font-size="14" fill="#A8C0D0" text-anchor="middle">récupérez les résultats.</text>
+
+  <rect x="937" y="432" width="180" height="38" rx="19" fill="#FF5FA0" fill-opacity="0.2" stroke="#FF5FA0" stroke-opacity="0.6" stroke-width="1.5"/>
+  <text x="1027" y="456" font-family="Arial, sans-serif" font-size="17" font-weight="800" fill="#FF9FC8" text-anchor="middle">-50% de coût</text>
+
+  <text x="1027" y="520" font-family="Arial, sans-serif" font-size="13" fill="#A8B8D0" text-anchor="middle" opacity="0.7">Traitement parallèle,</text>
+  <text x="1027" y="538" font-family="Arial, sans-serif" font-size="13" fill="#A8B8D0" text-anchor="middle" opacity="0.7">tarif réduit de moitié.</text>
+
+  <!-- FOOTER -->
+  <rect x="0" y="638" width="1200" height="37" fill="#FF8C42" fill-opacity="0.05"/>
+  <text x="600" y="662" font-family="Arial, sans-serif" font-size="13" fill="#FF8C42" text-anchor="middle" opacity="0.65">Tout le code est dispo gratuitement  →  github.com/charly4perrin-jpg/simplinvest</text>
+</svg>
