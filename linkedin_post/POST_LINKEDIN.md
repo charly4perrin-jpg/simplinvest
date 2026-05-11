@@ -1,45 +1,48 @@
-# POST LINKEDIN — Texte à copier-coller directement
+# POST LINKEDIN + TWEET — Textes à copier-coller
 
 ---
 
-## 🖼️ IMAGE À JOINDRE AU POST
-Fichier : `assets/banner.svg` → convertir en PNG 1200×630 avant d'uploader
-(outil gratuit : svgtopng.com ou Figma import)
+## 🖼️ IMAGE À JOINDRE
+- **LinkedIn** : `assets/banner.png` (1200×630)
+- **Twitter/X** : `assets/tweet_card.png` (1200×675)
 
 ---
 
-## ✍️ TEXTE DU POST
+## ✍️ TEXTE LINKEDIN
 
 ---
 
-🧠 **95 % des développeurs utilisent Claude en sous-régime. Voici comment le passer à 100 %.**
+J'utilise Claude depuis plusieurs mois dans des projets réels. Voici ce que personne ne dit.
 
-J'ai passé 3 mois à optimiser nos pipelines IA. Voici les 4 techniques qui ont tout changé — avec le code prêt à copier.
+La plupart des gens tapent une question, lisent la réponse, et s'arrêtent là.
+C'est oublier que Claude n'est pas un moteur de recherche — c'est un système qu'on structure.
 
 ─────────────────────────
 
-**⚡ 1. Prompt Caching — économisez jusqu'à 90 % sur vos tokens**
+**1. Le cache — arrêtez de répéter le même contexte à chaque appel**
 
-Si vous répétez le même contexte à chaque appel (docs, instructions, base de connaissances), vous brûlez de l'argent inutilement.
-La solution : `cache_control: {"type": "ephemeral"}` sur votre system prompt.
-Claude met en cache vos tokens côté serveur pendant 5 min.
+Quand votre système prompt fait 5 000 tokens et que vous l'envoyez 200 fois par jour, vous payez 200 fois pour la même chose.
+Avec `cache_control`, Claude stocke ce contexte côté serveur. Vous l'envoyez une fois. Le reste est mémorisé.
+
+Ce n'est pas une optimisation marginale. C'est un changement d'architecture.
 
 ```python
 system=[{
     "type": "text",
     "text": votre_contexte_long,
-    "cache_control": {"type": "ephemeral"}  # ← cette ligne change tout
+    "cache_control": {"type": "ephemeral"}
 }]
 ```
 
-👉 Code complet : github.com/charly4perrin-jpg/simplinvest/blob/claude/linkedin-claude-post-M07Ae/linkedin_post/examples/02_prompt_caching.py
+👉 github.com/charly4perrin-jpg/simplinvest/blob/claude/linkedin-claude-post-M07Ae/linkedin_post/examples/02_prompt_caching.py
 
 ─────────────────────────
 
-**🌊 2. Streaming — fini l'attente, bienvenue dans le temps réel**
+**2. Le streaming — la latence perçue, c'est ce qui tue l'adoption**
 
-Vos utilisateurs n'ont plus à fixer un écran blanc pendant 10 secondes.
-Les tokens arrivent dès qu'ils sont générés, comme vous lisez en ce moment.
+J'ai montré le même outil à deux groupes. Même réponse, même qualité.
+La différence : l'un attendait 8 secondes face à un écran vide. L'autre voyait les mots apparaître immédiatement.
+Le second groupe a adopté l'outil. Le premier l'a abandonné.
 
 ```python
 with client.messages.stream(model="claude-sonnet-4-6", ...) as stream:
@@ -47,13 +50,16 @@ with client.messages.stream(model="claude-sonnet-4-6", ...) as stream:
         print(text, end="", flush=True)
 ```
 
-👉 Code complet : github.com/charly4perrin-jpg/simplinvest/blob/claude/linkedin-claude-post-M07Ae/linkedin_post/examples/03_streaming.py
+👉 github.com/charly4perrin-jpg/simplinvest/blob/claude/linkedin-claude-post-M07Ae/linkedin_post/examples/03_streaming.py
 
 ─────────────────────────
 
-**🔧 3. Tool Use — connectez Claude à vos APIs en 20 lignes**
+**3. Le tool use — c'est là que Claude cesse d'être un chatbot**
 
-Claude ne se contente plus de répondre. Il appelle vos fonctions, récupère des données en live, puis synthétise. Un vrai agent autonome.
+Tant que Claude répond à des questions, il reste un assistant.
+Quand il commence à appeler vos APIs, interroger vos bases de données et prendre des décisions en fonction des résultats — il devient un composant de votre système.
+
+La différence n'est pas technique. Elle est conceptuelle.
 
 ```python
 tools = [{
@@ -63,51 +69,61 @@ tools = [{
 }]
 ```
 
-👉 Code complet : github.com/charly4perrin-jpg/simplinvest/blob/claude/linkedin-claude-post-M07Ae/linkedin_post/examples/04_tool_use.py
+👉 github.com/charly4perrin-jpg/simplinvest/blob/claude/linkedin-claude-post-M07Ae/linkedin_post/examples/04_tool_use.py
 
 ─────────────────────────
 
-**📦 4. Batch Processing — analysez 1 000 documents à -50 % de coût**
+**4. Le batch — pour les traitements lourds, ne serialisez pas ce qui peut être parallélisé**
 
-Pour les tâches hors ligne (classification, extraction, résumé en masse) : le mode batch vous facture moitié prix et traite tout en parallèle.
+Si vous avez 500 documents à analyser et que vous les envoyez un par un, vous attendez.
+Le mode batch traite tout en parallèle. Vous soumettez, vous revenez quand c'est prêt.
 
 ```python
-batch = client.messages.batches.create(requests=mes_1000_requetes)
-# → résultats disponibles en quelques minutes
+batch = client.messages.batches.create(requests=mes_requetes)
 ```
 
-👉 Code complet : github.com/charly4perrin-jpg/simplinvest/blob/claude/linkedin-claude-post-M07Ae/linkedin_post/examples/05_batch_processing.py
+👉 github.com/charly4perrin-jpg/simplinvest/blob/claude/linkedin-claude-post-M07Ae/linkedin_post/examples/05_batch_processing.py
 
 ─────────────────────────
 
-**🚀 Démarrage en 3 commandes :**
+Ce n'est pas Claude qui est puissant.
+C'est la façon dont vous le structurez.
 
-```bash
-pip install anthropic
-export ANTHROPIC_API_KEY="sk-ant-..."
-python linkedin_post/examples/01_quickstart.py
-```
-
-👉 Tous les exemples : github.com/charly4perrin-jpg/simplinvest/tree/claude/linkedin-claude-post-M07Ae/linkedin_post/examples
+Laquelle de ces quatre approches changez-vous dès aujourd'hui ? ⬇️
 
 ─────────────────────────
 
-La vraie question n'est plus *"utilises-tu l'IA ?"*
-C'est *"l'utilises-tu correctement ?"*
+#PromptEngineering #Claude #AI #Python #Developer #LLM #Anthropic #FinTech
 
-Ces 4 patterns représentent la différence entre un prototype qui coûte cher et une app qui scale.
+---
 
-Laquelle de ces techniques vous manquait ? ⬇️
+## ✍️ TWEET — mercredi 13 mai, 8h30
 
-─────────────────────────
+---
 
-#Claude #Anthropic #AI #MachineLearning #Python #Developer #PromptEngineering #LLM #FinTech #Startup
+Après plusieurs mois à utiliser Claude quotidiennement, voici ce que j'ai vraiment appris :
+
+Le **cache** évite de répéter le même contexte à chaque appel. Claude s'en souvient — vous, vous passez à l'essentiel.
+
+Le **streaming** change l'expérience utilisateur en profondeur. La latence perçue disparaît.
+
+Le **tool use**, c'est là que tout bascule. Claude ne répond plus, il agit dans votre système.
+
+Le **batch** pour traiter 1 000 éléments comme si c'en était un seul.
+
+Ce n'est pas l'IA qui est puissante. C'est la façon dont vous la structurez.
+
+Tout le code ici :
+github.com/charly4perrin-jpg/simplinvest/tree/claude/linkedin-claude-post-M07Ae/linkedin_post/examples
+
+#Claude #PromptEngineering #AI #Dev
 
 ---
 
 ## 📋 CHECKLIST AVANT PUBLICATION
 
-- [ ] Convertir `assets/banner.svg` → PNG et l'uploader comme image du post
-- [ ] Vérifier que les liens GitHub sont accessibles (repo public ?)
-- [ ] Poster entre 8h-9h ou 12h-13h un mardi/mercredi/jeudi (meilleure portée LinkedIn)
+- [ ] Joindre `assets/banner.png` sur LinkedIn
+- [ ] Joindre `assets/tweet_card.png` sur Twitter/X
+- [ ] Vérifier que le repo est public (pour que les liens fonctionnent)
+- [ ] Publier entre 8h-9h ou 12h-13h un mardi/mercredi/jeudi
 - [ ] Épingler un commentaire avec le lien direct vers le repo
