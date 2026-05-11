@@ -1,0 +1,213 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="2400" viewBox="0 0 680 2400">
+  <defs>
+    <linearGradient id="avatarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF8C42"/>
+      <stop offset="100%" style="stop-color:#FF5FA0"/>
+    </linearGradient>
+    <linearGradient id="liBtn" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0A66C2"/>
+      <stop offset="100%" style="stop-color:#0A66C2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Page background — LinkedIn light grey -->
+  <rect width="680" height="2400" fill="#F3F2EF"/>
+
+  <!-- ══════════════════════════════
+       TOP NAV BAR
+  ══════════════════════════════ -->
+  <rect x="0" y="0" width="680" height="52" fill="white" filter="none"/>
+  <rect x="0" y="52" width="680" height="1" fill="#E0DFDC"/>
+  <!-- LinkedIn logo area -->
+  <rect x="16" y="14" width="24" height="24" rx="4" fill="#0A66C2"/>
+  <text x="28" y="31" font-family="Arial" font-size="14" font-weight="900" fill="white" text-anchor="middle">in</text>
+  <!-- search bar -->
+  <rect x="52" y="13" width="220" height="26" rx="4" fill="#EEF3F8"/>
+  <text x="66" y="30" font-family="-apple-system, Arial, sans-serif" font-size="13" fill="#666">Rechercher</text>
+  <!-- nav icons placeholder -->
+  <text x="480" y="32" font-family="-apple-system, Arial, sans-serif" font-size="11" fill="#666" text-anchor="middle">Accueil</text>
+  <text x="560" y="32" font-family="-apple-system, Arial, sans-serif" font-size="11" fill="#666" text-anchor="middle">Réseau</text>
+  <text x="636" y="32" font-family="-apple-system, Arial, sans-serif" font-size="11" fill="#666" text-anchor="middle">Moi</text>
+
+  <!-- ══════════════════════════════
+       POST CARD
+  ══════════════════════════════ -->
+  <rect x="0" y="64" width="680" height="2270" rx="8" fill="white"/>
+  <rect x="0" y="64" width="680" height="2270" rx="8" fill="none" stroke="#E0DFDC" stroke-width="1"/>
+
+  <!-- ── HEADER ── -->
+  <!-- Avatar -->
+  <circle cx="36" cy="102" r="22" fill="url(#avatarGrad)"/>
+  <text x="36" y="109" font-family="Arial" font-size="17" font-weight="900" fill="white" text-anchor="middle">C</text>
+
+  <!-- Name + meta -->
+  <text x="68" y="95" font-family="-apple-system, Arial, sans-serif" font-size="15" font-weight="700" fill="#000000E6">Charly Perrin</text>
+  <text x="68" y="112" font-family="-apple-system, Arial, sans-serif" font-size="13" fill="#666">Développeur · Simplinvest</text>
+  <text x="68" y="128" font-family="-apple-system, Arial, sans-serif" font-size="12" fill="#999">14 h  · 🌐</text>
+
+  <!-- Follow button -->
+  <text x="628" y="96" font-family="-apple-system, Arial, sans-serif" font-size="20" fill="#666" text-anchor="middle">···</text>
+
+  <!-- ── POST TEXT ── -->
+  <text x="20" y="162" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#000000E6">J'utilise Claude depuis plusieurs mois dans des projets réels.</text>
+  <text x="20" y="183" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#000000E6">Voici ce que personne ne dit.</text>
+
+  <text x="20" y="214" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#333">La plupart des gens tapent une question, lisent la réponse,</text>
+  <text x="20" y="234" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#333">et s'arrêtent là. C'est oublier que Claude n'est pas un</text>
+  <text x="20" y="254" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#333">moteur de recherche — c'est un système qu'on structure.</text>
+
+  <!-- Separator -->
+  <line x1="20" y1="272" x2="660" y2="272" stroke="#E0DFDC" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Section 1 -->
+  <text x="20" y="298" font-family="-apple-system, Arial, sans-serif" font-size="14.5" font-weight="700" fill="#000">1. Le cache — arrêtez de répéter le même contexte</text>
+  <text x="20" y="320" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#333">Quand mon system prompt fait 5 000 tokens et que je l'envoie</text>
+  <text x="20" y="340" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#333">200 fois par jour, je payais 200 fois la même chose. Avec</text>
+  <rect x="20" y="351" width="100" height="19" rx="3" fill="#EEF3F8"/>
+  <text x="26" y="365" font-family="'Courier New', monospace" font-size="12" fill="#0A66C2">cache_control</text>
+  <text x="124" y="365" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#333">, Claude stocke ce contexte côté serveur.</text>
+  <text x="20" y="386" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#333">Je l'envoie une fois. Le reste est mémorisé.</text>
+  <text x="20" y="406" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#555" font-style="italic">Ce n'est pas une optimisation marginale. C'est un</text>
+  <text x="20" y="426" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#555" font-style="italic">changement d'architecture.</text>
+  <!-- code snippet 1 -->
+  <rect x="20" y="438" width="640" height="58" rx="6" fill="#F8F8F8" stroke="#E0DFDC" stroke-width="1"/>
+  <text x="34" y="457" font-family="'Courier New', monospace" font-size="12" fill="#888">system=[{"type": "text", "text": mon_contexte,</text>
+  <text x="34" y="477" font-family="'Courier New', monospace" font-size="12" fill="#0A66C2">        "cache_control": {"type": "ephemeral"}}]</text>
+  <!-- link -->
+  <text x="20" y="510" font-family="-apple-system, Arial, sans-serif" font-size="13" fill="#0A66C2">👉 Voir le code complet sur GitHub</text>
+
+  <line x1="20" y1="526" x2="660" y2="526" stroke="#E0DFDC" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Section 2 -->
+  <text x="20" y="552" font-family="-apple-system, Arial, sans-serif" font-size="14.5" font-weight="700" fill="#000">2. Le streaming — la latence perçue, c'est ce qui</text>
+  <text x="20" y="572" font-family="-apple-system, Arial, sans-serif" font-size="14.5" font-weight="700" fill="#000">tue l'adoption</text>
+  <text x="20" y="598" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#333">J'ai montré le même outil à deux groupes. Même réponse,</text>
+  <text x="20" y="618" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#333">même qualité. L'un attendait 8 secondes face à un écran vide.</text>
+  <text x="20" y="638" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#333">L'autre voyait les mots apparaître immédiatement.</text>
+  <text x="20" y="666" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#333">Le second groupe a adopté l'outil. Le premier l'a abandonné.</text>
+  <!-- code snippet 2 -->
+  <rect x="20" y="680" width="640" height="58" rx="6" fill="#F8F8F8" stroke="#E0DFDC" stroke-width="1"/>
+  <text x="34" y="699" font-family="'Courier New', monospace" font-size="12" fill="#888">with client.messages.stream(model="claude-sonnet-4-6",</text>
+  <text x="34" y="719" font-family="'Courier New', monospace" font-size="12" fill="#0A66C2">     ...) as stream:</text>
+  <text x="20" y="752" font-family="-apple-system, Arial, sans-serif" font-size="13" fill="#0A66C2">👉 Voir le code complet sur GitHub</text>
+
+  <line x1="20" y1="768" x2="660" y2="768" stroke="#E0DFDC" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Section 3 -->
+  <text x="20" y="794" font-family="-apple-system, Arial, sans-serif" font-size="14.5" font-weight="700" fill="#000">3. Le tool use — c'est là que Claude cesse d'être</text>
+  <text x="20" y="814" font-family="-apple-system, Arial, sans-serif" font-size="14.5" font-weight="700" fill="#000">un chatbot</text>
+  <text x="20" y="840" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#333">Tant que Claude répond à mes questions, il reste un assistant.</text>
+  <text x="20" y="860" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#333">Quand il commence à appeler mes APIs, interroger mes bases</text>
+  <text x="20" y="880" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#333">de données et prendre des décisions en fonction des résultats</text>
+  <text x="20" y="900" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#333">— il devient un composant de mon système.</text>
+  <text x="20" y="928" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#555" font-style="italic">La différence n'est pas technique. Elle est conceptuelle.</text>
+  <!-- code snippet 3 -->
+  <rect x="20" y="942" width="640" height="42" rx="6" fill="#F8F8F8" stroke="#E0DFDC" stroke-width="1"/>
+  <text x="34" y="961" font-family="'Courier New', monospace" font-size="12" fill="#888">tools = [{"name": "get_stock_price",</text>
+  <text x="34" y="977" font-family="'Courier New', monospace" font-size="12" fill="#0A66C2">          "input_schema": {...}}]</text>
+  <text x="20" y="1000" font-family="-apple-system, Arial, sans-serif" font-size="13" fill="#0A66C2">👉 Voir le code complet sur GitHub</text>
+
+  <line x1="20" y1="1016" x2="660" y2="1016" stroke="#E0DFDC" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Section 4 -->
+  <text x="20" y="1042" font-family="-apple-system, Arial, sans-serif" font-size="14.5" font-weight="700" fill="#000">4. Le batch — ne sérialisez pas ce qui peut être</text>
+  <text x="20" y="1062" font-family="-apple-system, Arial, sans-serif" font-size="14.5" font-weight="700" fill="#000">parallélisé</text>
+  <text x="20" y="1088" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#333">Si j'ai 500 documents à analyser et que je les envoie un par un,</text>
+  <text x="20" y="1108" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#333">j'attends. Le mode batch traite tout en parallèle. Je soumets,</text>
+  <text x="20" y="1128" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#333">je reviens quand c'est prêt.</text>
+  <!-- code snippet 4 -->
+  <rect x="20" y="1142" width="640" height="26" rx="6" fill="#F8F8F8" stroke="#E0DFDC" stroke-width="1"/>
+  <text x="34" y="1160" font-family="'Courier New', monospace" font-size="12" fill="#0A66C2">batch = client.messages.batches.create(requests=mes_requetes)</text>
+  <text x="20" y="1184" font-family="-apple-system, Arial, sans-serif" font-size="13" fill="#0A66C2">👉 Voir le code complet sur GitHub</text>
+
+  <line x1="20" y1="1200" x2="660" y2="1200" stroke="#E0DFDC" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Conclusion -->
+  <text x="20" y="1230" font-family="-apple-system, Arial, sans-serif" font-size="15" font-weight="700" fill="#000000E6">Ce n'est pas Claude qui est puissant.</text>
+  <text x="20" y="1252" font-family="-apple-system, Arial, sans-serif" font-size="15" font-weight="700" fill="#000000E6">C'est la façon dont vous le structurez.</text>
+  <text x="20" y="1282" font-family="-apple-system, Arial, sans-serif" font-size="14.5" fill="#333">Laquelle de ces quatre approches changez-vous dès aujourd'hui ?</text>
+
+  <!-- Hashtags -->
+  <text x="20" y="1316" font-family="-apple-system, Arial, sans-serif" font-size="14" fill="#0A66C2">#PromptEngineering  #Claude  #AI  #Python  #Developer</text>
+
+  <!-- ── BANNER IMAGE ── -->
+  <!-- Image frame -->
+  <rect x="0" y="1338" width="680" height="382" fill="#080810"/>
+  <!-- mini banner reproduction -->
+  <!-- ambient -->
+  <ellipse cx="100" cy="80" rx="200" ry="140" fill="#FF8C42" opacity="0.06"/>
+  <ellipse cx="580" cy="300" rx="200" ry="140" fill="#7B61FF" opacity="0.06"/>
+  <!-- top label -->
+  <text x="20" y="1366" font-family="'Courier New', monospace" font-size="10" fill="#FF8C42" opacity="0.5" letter-spacing="2">RETOUR D'EXPERIENCE — CLAUDE API</text>
+  <line x1="20" y1="1374" x2="660" y2="1374" stroke="#FF8C42" stroke-opacity="0.2" stroke-width="1"/>
+  <!-- Quote -->
+  <text x="340" y="1420" font-family="Georgia, serif" font-size="20" fill="#888" text-anchor="middle" font-style="italic">« Ce n'est pas l'IA qui est puissante.</text>
+  <text x="340" y="1445" font-family="Georgia, serif" font-size="20" fill="#888" text-anchor="middle" font-style="italic">C'est la façon dont on la structure. »</text>
+  <rect x="300" y="1458" width="80" height="2" fill="#FF8C42" opacity="0.6"/>
+  <!-- 4 observations -->
+  <text x="30" y="1498" font-family="'Courier New', monospace" font-size="11" fill="#FF8C42" opacity="0.7">01 /</text>
+  <text x="68" y="1498" font-family="Arial" font-size="13" font-weight="700" fill="white">Cache</text>
+  <text x="122" y="1498" font-family="Arial" font-size="13" fill="#777">— Je répétais le même contexte à chaque appel.</text>
+  <text x="30" y="1530" font-family="'Courier New', monospace" font-size="11" fill="#7B61FF" opacity="0.8">02 /</text>
+  <text x="68" y="1530" font-family="Arial" font-size="13" font-weight="700" fill="white">Streaming</text>
+  <text x="148" y="1530" font-family="Arial" font-size="13" fill="#777">— La latence perçue disparaît.</text>
+  <text x="30" y="1562" font-family="'Courier New', monospace" font-size="11" fill="#00C2A8" opacity="0.8">03 /</text>
+  <text x="68" y="1562" font-family="Arial" font-size="13" font-weight="700" fill="white">Tool use</text>
+  <text x="145" y="1562" font-family="Arial" font-size="13" fill="#777">— Claude a cessé de répondre. Il agit.</text>
+  <text x="30" y="1594" font-family="'Courier New', monospace" font-size="11" fill="#FF5FA0" opacity="0.8">04 /</text>
+  <text x="68" y="1594" font-family="Arial" font-size="13" font-weight="700" fill="white">Batch</text>
+  <text x="108" y="1594" font-family="Arial" font-size="13" fill="#777">— 1 000 éléments traités comme s'il n'y en avait qu'un.</text>
+  <!-- vertical bar -->
+  <rect x="52" y="1484" width="1" height="128" fill="#333"/>
+  <!-- right code block -->
+  <rect x="390" y="1480" width="278" height="190" rx="10" fill="#0D0D18" stroke="#222" stroke-width="1"/>
+  <circle cx="412" cy="1498" r="5" fill="#FF5F57" opacity="0.7"/>
+  <circle cx="428" cy="1498" r="5" fill="#FFBD2E" opacity="0.7"/>
+  <circle cx="444" cy="1498" r="5" fill="#28CA41" opacity="0.7"/>
+  <text x="406" y="1524" font-family="'Courier New', monospace" font-size="10" fill="#555">system=[{</text>
+  <text x="406" y="1542" font-family="'Courier New', monospace" font-size="10" fill="#555">  "type": </text>
+  <text x="472" y="1542" font-family="'Courier New', monospace" font-size="10" fill="#5A8C5A">"text"</text>
+  <text x="406" y="1560" font-family="'Courier New', monospace" font-size="10" fill="#FF8C42">  "cache_control"</text>
+  <text x="514" y="1560" font-family="'Courier New', monospace" font-size="10" fill="#555">: {</text>
+  <text x="406" y="1578" font-family="'Courier New', monospace" font-size="10" fill="#555">    "type": </text>
+  <text x="468" y="1578" font-family="'Courier New', monospace" font-size="10" fill="#5A8C5A">"ephemeral"</text>
+  <text x="406" y="1596" font-family="'Courier New', monospace" font-size="10" fill="#555">}}]</text>
+  <rect x="406" y="1610" width="6" height="12" fill="#FF8C42" opacity="0.7"/>
+  <!-- bottom of image -->
+  <line x1="20" y1="1700" x2="660" y2="1700" stroke="#FF8C42" stroke-opacity="0.15" stroke-width="1"/>
+  <text x="20" y="1714" font-family="'Courier New', monospace" font-size="10" fill="#444">github.com/charly4perrin-jpg/simplinvest</text>
+
+  <!-- ── REACTIONS BAR ── -->
+  <rect x="0" y="1722" width="680" height="1" fill="#E0DFDC"/>
+  <!-- reaction icons -->
+  <text x="20" y="1745" font-family="-apple-system, Arial, sans-serif" font-size="18">👍</text>
+  <text x="40" y="1745" font-family="-apple-system, Arial, sans-serif" font-size="18">❤️</text>
+  <text x="60" y="1745" font-family="-apple-system, Arial, sans-serif" font-size="18">🎉</text>
+  <text x="84" y="1744" font-family="-apple-system, Arial, sans-serif" font-size="13" fill="#666">284</text>
+  <text x="580" y="1744" font-family="-apple-system, Arial, sans-serif" font-size="13" fill="#666" text-anchor="end">47 commentaires · 89 republications</text>
+
+  <!-- ── ACTION BUTTONS ── -->
+  <rect x="0" y="1754" width="680" height="1" fill="#E0DFDC"/>
+  <!-- J'aime -->
+  <rect x="10" y="1762" width="148" height="34" rx="4" fill="white"/>
+  <text x="84" y="1784" font-family="-apple-system, Arial, sans-serif" font-size="14" fill="#666" text-anchor="middle">👍  J'aime</text>
+  <!-- Commenter -->
+  <rect x="166" y="1762" width="148" height="34" rx="4" fill="white"/>
+  <text x="240" y="1784" font-family="-apple-system, Arial, sans-serif" font-size="14" fill="#666" text-anchor="middle">💬  Commenter</text>
+  <!-- Republier -->
+  <rect x="322" y="1762" width="148" height="34" rx="4" fill="white"/>
+  <text x="396" y="1784" font-family="-apple-system, Arial, sans-serif" font-size="14" fill="#666" text-anchor="middle">🔁  Republier</text>
+  <!-- Envoyer -->
+  <rect x="478" y="1762" width="148" height="34" rx="4" fill="white"/>
+  <text x="552" y="1784" font-family="-apple-system, Arial, sans-serif" font-size="14" fill="#666" text-anchor="middle">➤  Envoyer</text>
+
+  <!-- ── COMMENT BOX ── -->
+  <rect x="0" y="1804" width="680" height="1" fill="#E0DFDC"/>
+  <circle cx="30" cy="1832" r="18" fill="url(#avatarGrad)"/>
+  <text x="30" y="1838" font-family="Arial" font-size="14" font-weight="900" fill="white" text-anchor="middle">C</text>
+  <rect x="58" y="1816" width="590" height="32" rx="16" fill="white" stroke="#E0DFDC" stroke-width="1"/>
+  <text x="76" y="1836" font-family="-apple-system, Arial, sans-serif" font-size="13" fill="#999">Ajouter un commentaire…</text>
+
+  <!-- watermark -->
+  <text x="340" y="1876" font-family="-apple-system, Arial, sans-serif" font-size="11" fill="#CCC" text-anchor="middle">— Aperçu généré par Claude Code —</text>
+</svg>
