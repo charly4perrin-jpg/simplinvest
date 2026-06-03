@@ -149,32 +149,39 @@ class LinkedInClient:
     # ── LIVE (à implémenter) ──────────────────────────────────────
 
     def _live_publier_post(self, contenu: str, image_path: str = None) -> dict:
-        # TODO: implémenter via Playwright ou API LinkedIn officielle
-        raise NotImplementedError("Mode LIVE non configuré. Définir LINKEDIN_MODE=live et implémenter.")
+        return self._pw().publier_post(contenu, image_path)
 
     def _live_republier(self, post_url: str, commentaire: str) -> dict:
-        raise NotImplementedError
+        return self._pw().republier_post(post_url, commentaire)
 
     def _live_repondre_commentaire(self, post_id: str, commentaire_id: str, reponse: str) -> bool:
-        raise NotImplementedError
+        return self._pw().repondre_commentaire(post_id, commentaire_id, reponse)
 
     def _live_envoyer_message(self, profil_id: str, message: str) -> bool:
-        raise NotImplementedError
+        return self._pw().envoyer_message(profil_id, message)
 
     def _live_connexion(self, profil_id: str, note: str) -> bool:
-        raise NotImplementedError
+        return self._pw().envoyer_demande_connexion(profil_id, note)
 
     def _live_lire_notifications(self) -> list[dict]:
-        raise NotImplementedError
+        return self._pw().lire_notifications()
 
     def _live_lire_messages(self) -> list[dict]:
-        raise NotImplementedError
+        return self._pw().lire_messages_non_lus()
 
     def _live_metriques(self, post_id: str) -> dict:
-        raise NotImplementedError
+        return self._pw().obtenir_metriques_post(post_id)
 
     def _live_rechercher_profils(self, criteres: dict) -> list[dict]:
-        raise NotImplementedError
+        return self._pw().rechercher_profils(criteres)
+
+    def _pw(self):
+        """Retourne l'instance Playwright, initialisée à la demande."""
+        if not hasattr(self, "_playwright_instance"):
+            from linkedin.playwright_client import PlaywrightLinkedIn
+            self._playwright_instance = PlaywrightLinkedIn(self.client_id)
+            self._playwright_instance.demarrer()
+        return self._playwright_instance
 
     def _log(self, message: str):
         log_path = DATA_DIR / "metrics" / f"{self.client_id}_linkedin.log"

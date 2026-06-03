@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+
+  dashboard:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./data:/app/data          # persistance des données entre redémarrages
+    env_file:
+      - .env
+    command: python dashboard/app.py
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/login"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  daemon:
+    build: .
+    volumes:
+      - ./data:/app/data
+    env_file:
+      - .env
+    command: python agent/daemon.py ${CLIENT_ID:-client_demo} --interval ${DAEMON_INTERVAL_MINUTES:-5}
+    restart: unless-stopped
+    depends_on:
+      - dashboard

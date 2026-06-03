@@ -10,7 +10,7 @@ import sys
 import json
 from pathlib import Path
 from datetime import datetime
-from flask import Flask, render_template, redirect, url_for, request, jsonify
+from flask import Flask, render_template, redirect, url_for, request, jsonify, session
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
@@ -21,19 +21,23 @@ from linkedin.scheduler import planifier_post, generer_planning_semaine
 from linkedin.anti_ban import rapport_activite_jour
 from memory.lead_tracker import charger_leads_chauds
 from config.settings import DATA_DIR
+from dashboard.auth import init_app, login_required, creer_cle_client
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
+init_app(app)
 
 
 # ── ROUTES PRINCIPALES ────────────────────────────────────────────
 
 @app.route("/")
+@login_required
 def index():
-    clients = lister_clients()
+    clients = lister_clients() if session.get("role") == "admin" else [session.get("client_id")]
     return render_template("index.html", clients=clients)
 
 
 @app.route("/client/<client_id>")
+@login_required
 def dashboard(client_id: str):
     persona = charger_persona(client_id)
     posts_generes = charger_posts_client(client_id, statut="genere")
@@ -60,6 +64,7 @@ def dashboard(client_id: str):
 
 
 @app.route("/client/<client_id>/posts")
+@login_required
 def posts(client_id: str):
     persona = charger_persona(client_id)
     statut = request.args.get("statut", "genere")
@@ -74,6 +79,7 @@ def posts(client_id: str):
 
 
 @app.route("/client/<client_id>/leads")
+@login_required
 def leads(client_id: str):
     persona = charger_persona(client_id)
     leads = charger_leads_chauds(client_id)
