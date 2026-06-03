@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Clients — AutoBranding{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1>Comptes gérés</h1>
+  <p class="subtitle">{{ clients|length }} client(s) actif(s)</p>
+</div>
+
+{% if clients %}
+<div class="grid">
+  {% for client in clients %}
+  <a href="/client/{{ client }}" class="card card-link">
+    <div class="card-avatar">{{ client[0]|upper }}</div>
+    <div>
+      <div class="card-title">{{ client.replace('_', ' ').title() }}</div>
+      <div class="card-meta">Voir le dashboard →</div>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+  <p>Aucun client encore.</p>
+  <code>python main.py onboard mon_client</code>
+</div>
+{% endif %}
+{% endblock %}

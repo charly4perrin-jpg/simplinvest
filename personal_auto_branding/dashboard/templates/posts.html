@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Posts — {{ persona.profil.nom }}{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <h1>Posts</h1>
+  <div class="tab-group">
+    <a href="?statut=genere" class="tab {% if statut_actif == 'genere' %}active{% endif %}">À valider</a>
+    <a href="?statut=valide" class="tab {% if statut_actif == 'valide' %}active{% endif %}">Planifiés</a>
+    <a href="?statut=publie" class="tab {% if statut_actif == 'publie' %}active{% endif %}">Publiés</a>
+    <a href="?statut=tous" class="tab {% if statut_actif == 'tous' %}active{% endif %}">Tous</a>
+  </div>
+</div>
+
+{% if posts %}
+<div class="post-list-full">
+  {% for post in posts %}
+  <div class="post-card-full" id="post-{{ post.id }}">
+    <div class="post-header">
+      <span class="badge badge-format">{{ post.format }}</span>
+      <span class="post-sujet-full">{{ post.sujet }}</span>
+      <div class="post-scores">
+        <span title="Authenticité">A:{{ post.validation.authenticite }}/10</span>
+        <span title="Ton">T:{{ post.validation.coherence_ton }}/10</span>
+        <span title="Clarté">C:{{ post.validation.clarte }}/10</span>
+        <span title="Engagement">E:{{ post.validation.engagement }}/10</span>
+        <strong>{{ post.validation.score_global }}/40</strong>
+      </div>
+    </div>
+
+    <div class="post-body">{{ post.contenu }}</div>
+
+    <div class="post-footer">
+      <div class="post-meta-footer">
+        <span>{{ post.longueur }} caractères</span>
+        <span>Créé le {{ post.cree_le[:10] }}</span>
+        {% if post.publie_le %}<span>Publié le {{ post.publie_le[:10] }}</span>{% endif %}
+      </div>
+
+      {% if post.statut == 'genere' %}
+      <div class="post-actions">
+        <button onclick="validerPost('{{ client_id }}', '{{ post.id }}')" class="btn btn-green">✓ Valider & Planifier</button>
+        <button onclick="rejeterPost('{{ client_id }}', '{{ post.id }}')" class="btn btn-outline">✕ Rejeter</button>
+      </div>
+      {% elif post.statut == 'publie' and post.metriques %}
+      <div class="metriques">
+        <span>👁 {{ post.metriques.impressions }}</span>
+        <span>❤ {{ post.metriques.likes }}</span>
+        <span>💬 {{ post.metriques.commentaires }}</span>
+        <span>🔁 {{ post.metriques.partages }}</span>
+        <strong>{{ post.metriques.taux_engagement }}% engagement</strong>
+      </div>
+      {% endif %}
+
+      {% if post.validation.suggestion %}
+      <div class="suggestion">💡 {{ post.validation.suggestion }}</div>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+  <p>Aucun post dans cette catégorie.</p>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function validerPost(clientId, postId) {
+  const res = await apiCall(`/api/post/${clientId}/${postId}/valider`);
+  if (res.succes) {
+    const el = document.getElementById(`post-${postId}`);
+    el.querySelector('.post-actions').innerHTML = '<span class="badge badge-green">Validé & planifié ✓</span>';
+  }
+}
+async function rejeterPost(clientId, postId) {
+  const res = await apiCall(`/api/post/${clientId}/${postId}/rejeter`);
+  if (res.succes) document.getElementById(`post-${postId}`).remove();
+}
+</script>
+{% endblock %}

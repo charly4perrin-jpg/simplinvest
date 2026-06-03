@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Leads — {{ persona.profil.nom }}{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <h1>Leads chauds 🔥</h1>
+  <p class="subtitle">{{ leads|length }} lead(s) à score ≥ 60/100</p>
+</div>
+
+{% if leads %}
+<div class="lead-list-full">
+  {% for lead in leads %}
+  <div class="lead-card-full">
+    <div class="lead-score-big {% if lead.score >= 80 %}score-hot{% elif lead.score >= 60 %}score-warm{% endif %}">
+      {{ lead.score }}
+    </div>
+    <div class="lead-details">
+      <div class="lead-name-big">{{ lead.contact }}</div>
+      <div class="lead-tags">
+        {% for action in lead.actions %}
+        <span class="badge badge-action">{{ action.replace('_', ' ') }}</span>
+        {% endfor %}
+      </div>
+      <div class="lead-date">Dernier engagement : {{ lead.mis_a_jour_le[:10] }}</div>
+    </div>
+    <div class="lead-cta">
+      <div class="lead-status">
+        {% if lead.score >= 80 %}🔥 Très chaud{% else %}⚡ Chaud{% endif %}
+      </div>
+      <div class="lead-hint">Envoyer un DM d'approche</div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+  <p>Aucun lead chaud pour l'instant.</p>
+  <p>Le système score automatiquement les contacts au fur et à mesure des interactions.</p>
+</div>
+{% endif %}
+
+{% endblock %}

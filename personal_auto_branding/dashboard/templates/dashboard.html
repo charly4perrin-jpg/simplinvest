@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block title %}{{ persona.profil.nom }} — Dashboard{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div>
+    <h1>{{ persona.profil.nom }}</h1>
+    <p class="subtitle">{{ persona.profil.metier }} · {{ persona.profil.ville }}</p>
+  </div>
+  <div class="badge badge-live">● LIVE</div>
+</div>
+
+{% if incidents %}
+<div class="alert alert-danger">
+  <strong>⚠ {{ incidents|length }} incident(s) en attente de résolution</strong>
+  {% for inc in incidents %}
+  <div class="incident-row">
+    <span class="badge badge-red">{{ inc.type }}</span>
+    {{ inc.contenu[:80] }}...
+    <button onclick="resoudreIncident('{{ client_id }}', {{ loop.index0 }})" class="btn btn-sm">Résoudre</button>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- KPIs -->
+<div class="kpi-grid">
+  <div class="kpi">
+    <div class="kpi-value">{{ posts_generes|length }}</div>
+    <div class="kpi-label">À valider</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-value">{{ posts_valides|length }}</div>
+    <div class="kpi-label">Planifiés</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-value">{{ posts_publies|length }}</div>
+    <div class="kpi-label">Publiés</div>
+  </div>
+  <div class="kpi kpi-hot">
+    <div class="kpi-value">{{ leads|length }}</div>
+    <div class="kpi-label">Leads chauds 🔥</div>
+  </div>
+</div>
+
+<!-- Activité du jour -->
+<section class="section">
+  <h2>Activité du jour</h2>
+  <div class="activity-grid">
+    {% for action, stats in activite.items() %}
+    <div class="activity-item">
+      <div class="activity-label">{{ action }}</div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width: {{ (stats.effectue / stats.limite * 100)|int }}%"></div>
+      </div>
+      <div class="activity-count">{{ stats.effectue }}/{{ stats.limite }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Posts à valider -->
+{% if posts_generes %}
+<section class="section">
+  <h2>Posts à valider <span class="badge">{{ posts_generes|length }}</span></h2>
+  <div class="post-list">
+    {% for post in posts_generes[:3] %}
+    <div class="post-card" id="post-{{ post.id }}">
+      <div class="post-meta">
+        <span class="badge badge-format">{{ post.format }}</span>
+        <span class="post-sujet">{{ post.sujet }}</span>
+        <span class="post-score">Score {{ post.validation.score_global }}/40</span>
+      </div>
+      <div class="post-preview">{{ post.contenu[:250] }}{% if post.contenu|length > 250 %}...{% endif %}</div>
+      <div class="post-actions">
+        <button onclick="validerPost('{{ client_id }}', '{{ post.id }}')" class="btn btn-green">✓ Valider</button>
+        <button onclick="rejeterPost('{{ client_id }}', '{{ post.id }}')" class="btn btn-outline">✕ Rejeter</button>
+        <a href="/client/{{ client_id }}/posts" class="btn btn-link">Voir tous →</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!-- Leads chauds -->
+{% if leads %}
+<section class="section">
+  <h2>Leads chauds 🔥</h2>
+  <div class="lead-list">
+    {% for lead in leads[:5] %}
+    <div class="lead-card">
+      <div class="lead-avatar">{{ lead.contact[0]|upper }}</div>
+      <div class="lead-info">
+        <div class="lead-name">{{ lead.contact }}</div>
+        <div class="lead-actions-list">{{ lead.actions|join(', ') }}</div>
+      </div>
+      <div class="lead-score">{{ lead.score }}<small>/100</small></div>
+    </div>
+    {% endfor %}
+  </div>
+  <a href="/client/{{ client_id }}/leads" class="btn btn-link">Voir tous les leads →</a>
+</section>
+{% endif %}
+
+<!-- Apprentissage -->
+{% if apprentissage.patterns %}
+<section class="section">
+  <h2>Ce que le système a appris</h2>
+  <div class="insights">
+    <div class="insight">
+      <span class="insight-label">Meilleur format</span>
+      <span class="insight-value">{{ apprentissage.patterns.meilleur_format }}</span>
+    </div>
+    <div class="insight">
+      <span class="insight-label">Engagement moyen</span>
+      <span class="insight-value">{{ apprentissage.patterns.score_moyen_engagement }}%</span>
+    </div>
+    <div class="insight insight-full">
+      <span class="insight-label">Recommandation</span>
+      <span class="insight-value">{{ apprentissage.patterns.recommandation_principale }}</span>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function validerPost(clientId, postId) {
+  const res = await apiCall(`/api/post/${clientId}/${postId}/valider`);
+  if (res.succes) {
+    document.getElementById(`post-${postId}`).style.opacity = '0.4';
+    document.getElementById(`post-${postId}`).innerHTML += '<div class="badge badge-green">Validé ✓</div>';
+  }
+}
+
+async function rejeterPost(clientId, postId) {
+  const res = await apiCall(`/api/post/${clientId}/${postId}/rejeter`);
+  if (res.succes) {
+    document.getElementById(`post-${postId}`).remove();
+  }
+}
+
+async function resoudreIncident(clientId, idx) {
+  await apiCall(`/api/incident/${clientId}/${idx}/resoudre`);
+  location.reload();
+}
+</script>
+{% endblock %}

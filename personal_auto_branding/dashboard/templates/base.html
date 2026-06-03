@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Personal Auto-Branding{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <nav class="nav">
+    <a href="/" class="nav-logo">⚡ AutoBranding</a>
+    {% if client_id is defined and client_id %}
+    <div class="nav-links">
+      <a href="/client/{{ client_id }}" class="{% if request.path == '/client/' + client_id %}active{% endif %}">Dashboard</a>
+      <a href="/client/{{ client_id }}/posts" class="{% if 'posts' in request.path %}active{% endif %}">Posts</a>
+      <a href="/client/{{ client_id }}/leads" class="{% if 'leads' in request.path %}active{% endif %}">Leads</a>
+    </div>
+    {% endif %}
+  </nav>
+
+  <main class="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <script>
+    async function apiCall(url, method = 'POST') {
+      const res = await fetch(url, { method });
+      return res.json();
+    }
+  </script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
