@@ -1,0 +1,16 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "python dashboard/app.py"
+healthcheckPath = "/login"
+healthcheckTimeout = 30
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
+
+[[services]]
+name = "dashboard"
+
+[[services]]
+name = "daemon"
+startCommand = "python agent/daemon.py $CLIENT_ID --interval $DAEMON_INTERVAL_MINUTES"

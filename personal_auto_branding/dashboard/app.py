@@ -6,6 +6,7 @@ Usage : python dashboard/app.py
         Ouvrir http://localhost:5000
 """
 
+import os
 import sys
 import json
 from pathlib import Path
@@ -257,4 +258,6 @@ def _changer_statut_post(client_id: str, post_id: str, nouveau_statut: str) -> b
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    debug = os.environ.get("FLASK_ENV") != "production"
+    app.run(host="0.0.0.0", debug=debug, port=port)

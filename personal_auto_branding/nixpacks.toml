@@ -1,0 +1,17 @@
+[phases.setup]
+nixPkgs = ["python311", "chromium", "nss", "nspr", "atk", "cups", "libdrm", "mesa", "libxkbcommon", "pango", "cairo", "alsa-lib"]
+
+[phases.install]
+cmds = [
+  "pip install -r requirements.txt",
+  "python -m playwright install chromium"
+]
+
+[start]
+cmd = "python dashboard/app.py"
+
+[variables]
+PYTHONUNBUFFERED = "1"
+PYTHONPATH = "/app"
+PLAYWRIGHT_BROWSERS_PATH = "/ms-playwright"
+PORT = "8080"
