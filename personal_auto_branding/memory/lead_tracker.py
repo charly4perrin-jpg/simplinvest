@@ -72,6 +72,13 @@ def _alerter_lead_chaud(client_id: str, contact: str, score: int):
     with open(alertes_path, "w", encoding="utf-8") as f:
         json.dump(alertes, f, ensure_ascii=False, indent=2)
 
+    # Notification email + SMS
+    try:
+        from notifications.alertes import alerter_lead_chaud
+        alerter_lead_chaud(client_id, contact, score)
+    except Exception:
+        pass
+
 
 def generer_message_approche(persona: dict, lead: dict, historique: list) -> str:
     """Génère un message d'approche personnalisé pour un lead chaud."""

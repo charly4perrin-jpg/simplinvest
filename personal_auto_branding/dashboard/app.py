@@ -136,6 +136,97 @@ def api_stats(client_id: str):
     })
 
 
+# ── LANDING & ONBOARDING (routes publiques) ───────────────────────
+
+@app.route("/landing")
+def landing():
+    return render_template("landing.html")
+
+
+@app.route("/onboarding")
+def onboarding():
+    plan = request.args.get("plan", "pro")
+    return render_template("onboarding.html", plan=plan)
+
+
+@app.route("/api/onboarding", methods=["POST"])
+def api_onboarding():
+    """Reçoit le formulaire d'onboarding web et crée le persona."""
+    data = request.get_json()
+    if not data:
+        return jsonify({"succes": False, "erreur": "Données manquantes"})
+
+    client_id = f"{data.get('prenom', 'client').lower()}_{data.get('nom', '').lower()}".replace(" ", "_")
+
+    # Construire le persona depuis les données du formulaire
+    persona = {
+        "id": client_id,
+        "cree_le": datetime.now().isoformat(),
+        "plan": data.get("plan", "pro"),
+        "email": data.get("email", ""),
+        "profil": {
+            "nom": f"{data.get('prenom', '')} {data.get('nom', '')}".strip(),
+            "metier": data.get("metier", ""),
+            "entreprise": data.get("entreprise", "Indépendant"),
+            "ville": data.get("ville", ""),
+            "annees_experience": data.get("experience", "5-10"),
+        },
+        "strategie": {
+            "objectif_principal": data.get("objectif", "leads"),
+            "client_ideal": data.get("client_ideal", ""),
+            "resultat_promis": data.get("resultat", ""),
+            "inspirations": data.get("inspirations", ""),
+        },
+        "voix": {
+            "ton": data.get("ton", "direct et concis"),
+            "sujets_forces": data.get("sujets", ""),
+            "sujets_interdits": data.get("sujets_interdits", ""),
+            "exemples_posts": data.get("exemples", ""),
+            "empreinte": _generer_empreinte_web(data),
+        },
+    }
+
+    # Sauvegarder
+    chemin = DATA_DIR / "profiles" / f"{client_id}.json"
+    chemin.parent.mkdir(parents=True, exist_ok=True)
+    with open(chemin, "w", encoding="utf-8") as f:
+        json.dump(persona, f, ensure_ascii=False, indent=2)
+
+    # Créer la clé API client
+    from dashboard.auth import creer_cle_client
+    cle = creer_cle_client(client_id)
+
+    # Alerte email au gestionnaire
+    try:
+        from notifications.alertes import envoyer_email
+        envoyer_email(
+            f"Nouveau client — {persona['profil']['nom']} ({data.get('plan')})",
+            f"<p>Nouveau client onboardé : <strong>{persona['profil']['nom']}</strong></p>"
+            f"<p>Plan : {data.get('plan')} | Email : {data.get('email')}</p>"
+            f"<p>Clé API : <code>{cle}</code></p>"
+        )
+    except Exception:
+        pass
+
+    return jsonify({"succes": True, "client_id": client_id})
+
+
+def _generer_empreinte_web(data: dict) -> str:
+    """Génère l'empreinte vocale depuis les données du formulaire d'onboarding."""
+    try:
+        import anthropic
+        client = anthropic.Anthropic()
+        prompt = f"""Génère une empreinte vocale LinkedIn en 150 mots pour :
+Métier : {data.get('metier')} | Ton : {data.get('ton')} | Expertise : {data.get('sujets')}
+Objectif : {data.get('objectif')} | Client idéal : {data.get('client_ideal')}
+Exemples appréciés : {data.get('exemples', 'non fournis')}
+Décris le style d'écriture, les tournures typiques, l'énergie du compte."""
+        msg = client.messages.create(model="claude-haiku-4-5-20251001", max_tokens=300, messages=[{"role": "user", "content": prompt}])
+        return msg.content[0].text
+    except Exception:
+        return f"Profil {data.get('metier', '')} — ton {data.get('ton', 'direct')} — expertise {data.get('sujets', '')}."
+
+
 # ── UTILITAIRES ───────────────────────────────────────────────────
 
 def _charger_incidents(client_id: str) -> list:

@@ -27,6 +27,7 @@ from linkedin.anti_ban import peut_effectuer_action, attendre_delai_humain, heur
 from linkedin.connection_filter import filtrer_et_connecter
 from memory.lead_tracker import scorer_contact
 from memory.conversation_memory import charger_historique
+from notifications.alertes import alerter_incident, alerter_post_publie
 from safety.crisis_manager import creer_rapport_crise
 from config.settings import DATA_DIR
 
@@ -97,6 +98,7 @@ class Daemon:
             resultat = self.linkedin.publier_post(post["contenu"])
             if resultat["succes"]:
                 marquer_publie(self.client_id, entree["post_id"])
+                alerter_post_publie(self.client_id, post["sujet"], resultat.get("url", ""))
                 self._log(f"Post publié : {post['sujet'][:50]}")
                 attendre_delai_humain("post")
 
@@ -128,6 +130,7 @@ class Daemon:
                     "contenu": notif["contenu"],
                     "raison": resultat["raison"],
                 })
+                alerter_incident(self.client_id, "commentaire_sensible", notif["contenu"], notif["auteur"])
                 self._log(f"[CRISE] Escalade humain — {notif['auteur']}")
             else:
                 self.linkedin.repondre_commentaire(

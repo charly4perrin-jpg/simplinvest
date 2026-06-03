@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Démarrer — AutoBranding</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
+</head>
+<body style="background:#080808">
+
+<nav class="l-nav">
+  <div class="l-nav-inner">
+    <a href="/" class="l-logo">⚡ AutoBranding</a>
+    <span style="font-size:13px;color:#666">Onboarding — 20 min</span>
+  </div>
+</nav>
+
+<div class="ob-wrap" id="ob-form-wrap">
+
+  <div class="ob-header">
+    <h1>Configure ton compte</h1>
+    <p>20 minutes. L'IA fait le reste.</p>
+  </div>
+
+  <!-- Barre de progression -->
+  <div class="ob-step-bar">
+    <div class="ob-step-dot active" id="dot-0"></div>
+    <div class="ob-step-dot" id="dot-1"></div>
+    <div class="ob-step-dot" id="dot-2"></div>
+    <div class="ob-step-dot" id="dot-3"></div>
+  </div>
+
+  <form id="ob-form">
+
+    <!-- Étape 0 — Profil de base -->
+    <div class="ob-section visible" data-step="0">
+      <div class="ob-section-title">Qui es-tu ?</div>
+      <div class="ob-grid2">
+        <div class="ob-field">
+          <label class="ob-label">Prénom</label>
+          <input class="ob-input" name="prenom" placeholder="Thomas" required>
+        </div>
+        <div class="ob-field">
+          <label class="ob-label">Nom</label>
+          <input class="ob-input" name="nom" placeholder="Dupont" required>
+        </div>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Ton métier / ton titre</label>
+        <input class="ob-input" name="metier" placeholder="ex: Consultant en stratégie digitale" required>
+      </div>
+      <div class="ob-grid2">
+        <div class="ob-field">
+          <label class="ob-label">Entreprise (ou Indépendant)</label>
+          <input class="ob-input" name="entreprise" placeholder="ex: TechCorp ou Indépendant">
+        </div>
+        <div class="ob-field">
+          <label class="ob-label">Ville</label>
+          <input class="ob-input" name="ville" placeholder="ex: Paris">
+        </div>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Années d'expérience</label>
+        <select class="ob-select" name="experience">
+          <option value="moins de 2">Moins de 2 ans</option>
+          <option value="2-5">2 à 5 ans</option>
+          <option value="5-10" selected>5 à 10 ans</option>
+          <option value="plus de 10">Plus de 10 ans</option>
+        </select>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Email</label>
+        <input class="ob-input" type="email" name="email" placeholder="ton@email.com" required>
+      </div>
+    </div>
+
+    <!-- Étape 1 — Objectifs -->
+    <div class="ob-section" data-step="1">
+      <div class="ob-section-title">Tes objectifs LinkedIn</div>
+      <div class="ob-field">
+        <label class="ob-label">Objectif principal</label>
+        <select class="ob-select" name="objectif">
+          <option value="leads">Générer des leads et RDVs commerciaux</option>
+          <option value="visibilite">Augmenter ma visibilité et notoriété</option>
+          <option value="recrutement">Attirer des talents / recruter</option>
+          <option value="partenariats">Trouver des partenaires business</option>
+          <option value="autorite">Devenir une référence dans mon domaine</option>
+        </select>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Décris ton client / prospect idéal</label>
+        <textarea class="ob-textarea" name="client_ideal" placeholder="ex: Directeurs commerciaux de PME SaaS entre 10 et 100 salariés, en France, qui cherchent à scaler leur équipe sales" required></textarea>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Quel résultat concret veux-tu mettre en avant sur LinkedIn ?</label>
+        <input class="ob-input" name="resultat" placeholder="ex: J'aide mes clients à doubler leur pipeline en 90 jours" required>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Plan choisi</label>
+        <select class="ob-select" name="plan">
+          <option value="starter" {% if plan == 'starter' %}selected{% endif %}>Starter — 97€/mois</option>
+          <option value="pro" {% if plan == 'pro' %}selected{% endif %}>Pro — 197€/mois</option>
+          <option value="agency" {% if plan == 'agency' %}selected{% endif %}>Agency — 497€/mois</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Étape 2 — Voix et style -->
+    <div class="ob-section" data-step="2">
+      <div class="ob-section-title">Ta voix, ton style</div>
+      <div class="ob-field">
+        <label class="ob-label">Ton d'écriture</label>
+        <select class="ob-select" name="ton">
+          <option value="direct et concis">Direct et concis — va droit au but</option>
+          <option value="inspirant">Inspirant — donne envie d'agir</option>
+          <option value="educatif">Éducatif — explique et vulgarise</option>
+          <option value="provocateur">Provocateur — opinions tranchées</option>
+          <option value="authentique">Authentique — partage d'expériences</option>
+        </select>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Tes 3 sujets d'expertise (séparés par des virgules)</label>
+        <input class="ob-input" name="sujets" placeholder="ex: vente B2B, management commercial, prospection LinkedIn" required>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Sujets à éviter absolument</label>
+        <input class="ob-input" name="sujets_interdits" placeholder="ex: politique, religion, mes concurrents directs">
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Exemples de posts que tu aimes (optionnel)</label>
+        <textarea class="ob-textarea" name="exemples" placeholder="Colle ici 1 ou 2 posts LinkedIn que tu trouves bien écrits. L'IA s'en inspirera pour calibrer ton style."></textarea>
+      </div>
+    </div>
+
+    <!-- Étape 3 — Finalisation -->
+    <div class="ob-section" data-step="3">
+      <div class="ob-section-title">Presque prêt ✓</div>
+      <div class="ob-field">
+        <label class="ob-label">Comptes LinkedIn qui t'inspirent</label>
+        <input class="ob-input" name="inspirations" placeholder="ex: Robin Tempe, Alexandre Dana, Thibault Louis">
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Quelque chose d'important à savoir sur toi ou ton business ?</label>
+        <textarea class="ob-textarea" name="contexte_supplementaire" placeholder="Infos particulières, contraintes, éléments de différenciation que l'IA doit connaître..."></textarea>
+      </div>
+      <div style="background:#111;border:1px solid #222;border-radius:10px;padding:20px;margin-top:8px">
+        <p style="font-size:14px;color:#888;margin-bottom:8px">En cliquant sur Lancer, tu acceptes que tes données soient utilisées pour générer ton contenu LinkedIn via l'API Claude (Anthropic). Aucune donnée n'est revendue.</p>
+        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px">
+          <input type="checkbox" id="ob-consent" required style="width:16px;height:16px;accent-color:#4f8ef7">
+          J'accepte les conditions d'utilisation
+        </label>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="ob-nav">
+      <button type="button" class="ob-btn ob-btn-prev" id="ob-prev" style="display:none" onclick="obNav(-1)">← Retour</button>
+      <div style="flex:1"></div>
+      <button type="button" class="ob-btn ob-btn-next" id="ob-next" onclick="obNav(1)">Suivant →</button>
+      <button type="submit" class="ob-btn ob-btn-submit" id="ob-submit" style="display:none">🚀 Lancer mon compte</button>
+    </div>
+
+  </form>
+
+  <!-- Succès -->
+  <div class="ob-success" id="ob-success" style="display:none">
+    <div style="font-size:60px;margin-bottom:24px">✅</div>
+    <h2>Ton compte est en cours de création</h2>
+    <p>L'IA analyse ton profil et génère ton empreinte vocale.<br>Tu recevras tes accès par email dans les prochaines minutes.</p>
+    <a href="/" class="l-btn-primary" style="margin-top:24px;display:inline-block">Accéder au dashboard →</a>
+  </div>
+
+</div>
+
+<script>
+const STEPS = 4;
+let currentStep = 0;
+
+function obNav(dir) {
+  const sections = document.querySelectorAll('.ob-section');
+  const dots = document.querySelectorAll('.ob-step-dot');
+
+  // Validation simple de l'étape courante
+  const currentSection = sections[currentStep];
+  const required = currentSection.querySelectorAll('[required]');
+  for (const el of required) {
+    if (!el.value.trim()) {
+      el.focus();
+      el.style.borderColor = '#ef4444';
+      setTimeout(() => el.style.borderColor = '', 2000);
+      return;
+    }
+  }
+
+  dots[currentStep].classList.remove('active');
+  dots[currentStep].classList.add('done');
+
+  currentStep = Math.max(0, Math.min(STEPS - 1, currentStep + dir));
+
+  sections.forEach((s, i) => s.classList.toggle('visible', i === currentStep));
+  dots[currentStep].classList.add('active');
+  dots[currentStep].classList.remove('done');
+
+  document.getElementById('ob-prev').style.display = currentStep === 0 ? 'none' : '';
+  document.getElementById('ob-next').style.display = currentStep === STEPS - 1 ? 'none' : '';
+  document.getElementById('ob-submit').style.display = currentStep === STEPS - 1 ? '' : 'none';
+}
+
+document.getElementById('ob-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(e.target));
+  try {
+    const res = await fetch('/api/onboarding', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data) });
+    const json = await res.json();
+    if (json.succes) {
+      document.getElementById('ob-form-wrap').style.display = 'none';
+      document.getElementById('ob-success').style.display = 'block';
+    }
+  } catch {
+    document.getElementById('ob-form-wrap').innerHTML += '<p style="color:#ef4444;text-align:center;margin-top:12px">Erreur serveur. Réessaie.</p>';
+  }
+});
+</script>
+</body>
+</html>
