@@ -1,0 +1,196 @@
+:root {
+  --pink: #ff2e93;
+  --hot-pink: #ff6ec7;
+  --cyan: #05d9e8;
+  --teal: #00fff0;
+  --orange: #ff9036;
+  --gold: #ffcf5c;
+  --purple: #7b2ff7;
+  --navy: #0d0221;
+  --ink: #f5f0ff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  background: var(--navy);
+  color: var(--ink);
+  font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+#bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  transition: opacity .5s ease;
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: .05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.hud {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 40px;
+  pointer-events: none;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.hud-brand {
+  font-size: 1.1rem;
+  font-style: italic;
+  background: linear-gradient(90deg, var(--hot-pink), var(--cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hud-brand .dot { color: var(--gold); -webkit-text-fill-color: var(--gold); }
+
+.hud-counter {
+  font-size: .85rem;
+  opacity: .85;
+  font-variant-numeric: tabular-nums;
+}
+.hud-counter #chapNum {
+  color: var(--hot-pink);
+  font-size: 1.1rem;
+}
+
+#scenes { position: relative; z-index: 2; }
+
+.scene {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 40px 14vh;
+}
+
+.scene-inner { max-width: 780px; }
+.scene-inner.center {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.eyebrow {
+  font-size: .8rem;
+  letter-spacing: .35em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 14px;
+  text-shadow: 0 0 12px rgba(5,217,232,.6);
+}
+
+.title {
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: -.02em;
+  text-transform: uppercase;
+  text-shadow: 0 0 30px rgba(255,46,147,.35);
+}
+
+.title.big { font-size: clamp(2.8rem, 8vw, 6.5rem); }
+
+.sub {
+  margin-top: 22px;
+  font-size: 1.1rem;
+  color: rgba(245,240,255,.75);
+  line-height: 1.5;
+}
+
+.logo-title {
+  font-size: clamp(2.6rem, 9vw, 6rem);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -.01em;
+  line-height: .95;
+  text-transform: uppercase;
+  background: linear-gradient(100deg, var(--hot-pink) 10%, var(--gold) 45%, var(--cyan) 85%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 40px rgba(255,110,199,.45));
+  transform: skewX(-4deg);
+}
+.logo-title .six {
+  -webkit-text-fill-color: var(--navy);
+  color: var(--navy);
+  background: var(--ink);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.cta {
+  margin-top: 10px;
+  padding: 14px 30px;
+  border-radius: 999px;
+  border: 1px solid rgba(245,240,255,.4);
+  background: rgba(255,255,255,.05);
+  color: var(--ink);
+  font-weight: 700;
+  letter-spacing: .08em;
+  font-size: .85rem;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: all .25s ease;
+}
+.cta:hover {
+  background: linear-gradient(90deg, var(--pink), var(--cyan));
+  border-color: transparent;
+  box-shadow: 0 0 30px rgba(255,46,147,.5);
+}
+
+.scroll-hint {
+  position: fixed;
+  bottom: 24px;
+  left: 40px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: .7rem;
+  letter-spacing: .3em;
+  color: rgba(245,240,255,.6);
+  pointer-events: none;
+  transition: opacity .4s ease;
+}
+.scroll-hint i {
+  display: block;
+  width: 1px;
+  height: 26px;
+  background: linear-gradient(rgba(245,240,255,.9), transparent);
+  animation: scrollpulse 1.6s ease-in-out infinite;
+}
+@keyframes scrollpulse {
+  0% { transform: translateY(-4px); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: translateY(14px); opacity: 0; }
+}
+.scroll-hint.hide { opacity: 0; }
+
+@media (max-width: 640px) {
+  .hud { padding: 20px 22px; }
+  .scene { padding: 0 22px 10vh; }
+  .scroll-hint { left: 22px; }
+}
