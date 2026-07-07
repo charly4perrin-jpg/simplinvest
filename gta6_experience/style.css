@@ -29,14 +29,32 @@ html, body {
   transition: opacity .5s ease;
 }
 
+#bg3d {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
 .grain {
   position: fixed;
   inset: 0;
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
   opacity: .05;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 45%, rgba(5,1,15,.55) 100%);
 }
 
 .hud {
@@ -72,16 +90,27 @@ html, body {
   font-size: 1.1rem;
 }
 
-#scenes { position: relative; z-index: 2; }
+#scenes { position: relative; z-index: 3; }
 
 .scene {
   min-height: 100vh;
   display: flex;
   align-items: flex-end;
   padding: 0 40px 14vh;
+  perspective: 1000px;
 }
 
-.scene-inner { max-width: 780px; }
+.scene-inner {
+  max-width: 780px;
+  transform: rotateX(var(--tiltY, 0deg)) rotateY(var(--tiltX, 0deg));
+  transform-style: preserve-3d;
+  transition: transform .15s ease-out, opacity .7s ease, filter .7s ease;
+  opacity: 0;
+  filter: blur(6px);
+  will-change: transform, opacity;
+}
+.scene-inner.in-view { opacity: 1; filter: blur(0); }
+
 .scene-inner.center {
   max-width: 900px;
   margin: 0 auto;

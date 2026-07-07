@@ -10,8 +10,10 @@
 <body>
 
 <canvas id="bg"></canvas>
+<canvas id="bg3d"></canvas>
 
 <div class="grain"></div>
+<div class="vignette"></div>
 
 <header class="hud">
   <span class="hud-brand">VICE<span class="dot">•</span></span>
@@ -97,6 +99,7 @@
 
 <div class="scroll-hint"><span>SCROLL</span><i></i></div>
 
-<script src="script.js"></script>
+<script type="module" src="three-scene.js"></script>
+<script src="script.js" defer></script>
 </body>
 </html>

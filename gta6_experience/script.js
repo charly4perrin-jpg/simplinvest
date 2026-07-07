@@ -349,6 +349,10 @@
   // ---------- scroll-driven chapter switching ----------
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
+      const inner = entry.target.querySelector('.scene-inner');
+      entry.target.classList.toggle('active', entry.isIntersecting && entry.intersectionRatio > 0.5);
+      if (inner) inner.classList.toggle('in-view', entry.intersectionRatio > 0.35);
+
       if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
         const scene = entry.target.dataset.scene;
         const idx = sections.indexOf(entry.target) + 1;
@@ -358,14 +362,27 @@
         }
         current = scene;
         chapNum.textContent = String(idx).padStart(2, '0');
+        window.setActive3DScene?.(scene);
       }
     });
-  }, { threshold: [0, 0.5, 1] });
+  }, { threshold: [0, 0.35, 0.5, 1] });
 
   sections.forEach(s => io.observe(s));
 
   window.addEventListener('scroll', () => {
     scrollHint.classList.toggle('hide', window.scrollY > 80);
+  });
+
+  // ---------- 3D cursor tilt on the active chapter's text block ----------
+  window.addEventListener('pointermove', (e) => {
+    const activeSection = document.querySelector('.scene.active');
+    if (!activeSection) return;
+    const inner = activeSection.querySelector('.scene-inner');
+    if (!inner) return;
+    const nx = (e.clientX / window.innerWidth - 0.5) * 2;
+    const ny = (e.clientY / window.innerHeight - 0.5) * 2;
+    inner.style.setProperty('--tiltX', `${nx * 4}deg`);
+    inner.style.setProperty('--tiltY', `${-ny * 3}deg`);
   });
 
   document.getElementById('restart').addEventListener('click', () => {
