@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas Vice — Carte interactive</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d0221'/%3E%3Ctext x='50' y='70' font-size='58' text-anchor='middle' fill='%23ff2e93'%3E◆%3C/text%3E%3C/svg%3E">
+<link rel="preload" href="vendor/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="atlas.css">
+<link rel="stylesheet" href="map.css">
+</head>
+<body class="mapapp">
+
+<div class="grain"></div>
+
+<header class="topbar">
+  <a class="brand" href="index.html">ATLAS VICE<span class="tm">β</span></a>
+  <div class="world-tabs" role="tablist">
+    <button id="tab-v" role="tab" aria-selected="true">San Andreas</button>
+    <button id="tab-vi" role="tab" aria-selected="false">Leonida</button>
+  </div>
+  <nav class="topnav">
+    <a class="nav-cta" href="index.html#tarifs">Vice Pass</a>
+  </nav>
+</header>
+
+<div class="map-layout">
+
+  <aside class="sidebar">
+    <input type="search" id="poiSearch" placeholder="Chercher un lieu…" aria-label="Chercher un lieu">
+    <div class="chips" id="chips"></div>
+    <p class="count" id="poiCount"></p>
+    <ul class="poi-list" id="poiList"></ul>
+    <div class="sidebar-note">
+      <b>◆ Vice Pass</b> — les lieux verrouillés (secrets, easter eggs, itinéraires)
+      se débloquent avec le pass. <a href="index.html#tarifs">Voir l'offre</a>
+    </div>
+  </aside>
+
+  <main class="map-stage">
+    <svg id="mapV" class="worldmap" viewBox="0 0 800 1000" aria-label="Carte de San Andreas">
+      <defs>
+        <radialGradient id="glowV" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stop-color="rgba(5,217,232,.35)"/>
+          <stop offset="1" stop-color="rgba(5,217,232,0)"/>
+        </radialGradient>
+      </defs>
+      <rect width="800" height="1000" fill="#080322"/>
+      <g stroke="rgba(5,217,232,.06)" stroke-width="1">
+        <path d="M0,125 H800 M0,250 H800 M0,375 H800 M0,500 H800 M0,625 H800 M0,750 H800 M0,875 H800
+                 M100,0 V1000 M200,0 V1000 M300,0 V1000 M400,0 V1000 M500,0 V1000 M600,0 V1000 M700,0 V1000"/>
+      </g>
+      <text x="24" y="985" class="map-coord">N 34° — SAN ANDREAS — RELEVÉ ATLAS 12.4</text>
+
+      <path class="land" d="M330,45 C440,28 555,70 600,155 C645,240 620,320 650,410
+             C680,500 700,610 665,720 C630,835 545,920 430,945 C315,970 205,915 160,810
+             C115,705 135,585 122,470 C110,355 150,240 195,160 C235,90 270,55 330,45 Z"
+             fill="rgba(5,217,232,.05)" stroke="#05d9e8" stroke-width="2.5"/>
+
+      <ellipse cx="400" cy="295" rx="78" ry="42" fill="rgba(5,217,232,.13)" stroke="rgba(5,217,232,.55)" stroke-width="1.5"/>
+      <path d="M255,190 L305,105 L355,190 Z" fill="none" stroke="rgba(5,217,232,.65)" stroke-width="1.6"/>
+      <path d="M230,140 L258,96 L286,140 Z" fill="none" stroke="rgba(5,217,232,.35)" stroke-width="1.2"/>
+      <rect x="185" y="360" width="90" height="52" fill="none" stroke="rgba(5,217,232,.5)" stroke-width="1.4" stroke-dasharray="6 4"/>
+      <path d="M270,700 L560,700 L600,860 L470,930 L300,915 L260,800 Z"
+            fill="rgba(5,217,232,.09)" stroke="rgba(5,217,232,.45)" stroke-width="1.3"/>
+      <path d="M330,905 L450,905 L470,935 L350,940 Z" fill="rgba(5,217,232,.14)" stroke="rgba(5,217,232,.5)" stroke-width="1.2"/>
+
+      <g class="roads" stroke="rgba(5,217,232,.3)" fill="none">
+        <path d="M180,760 C150,640 165,520 150,420 C140,330 175,220 235,150" stroke-width="2"/>
+        <path d="M410,930 C420,800 430,650 425,520 C420,420 430,340 470,300 C520,255 560,220 575,170" stroke-width="2"/>
+        <path d="M150,455 H640" stroke-width="1.5" stroke-dasharray="10 6"/>
+        <path d="M270,700 C330,640 420,620 520,640" stroke-width="1.5"/>
+      </g>
+
+      <g class="map-labels">
+        <text x="330" y="88">PALETO BAY</text>
+        <text x="258" y="215">MT. CHILIAD</text>
+        <text x="352" y="290">ALAMO SEA</text>
+        <text x="440" y="352">SANDY SHORES</text>
+        <text x="196" y="352">FORT ZANCUDO</text>
+        <text x="356" y="680">VINEWOOD</text>
+        <text x="380" y="795" class="big">LOS SANTOS</text>
+        <text x="330" y="898">LSIA</text>
+        <text x="580" y="560">PALOMINO</text>
+      </g>
+      <g id="markersV" class="markers"></g>
+    </svg>
+
+    <svg id="mapVI" class="worldmap hidden" viewBox="0 0 800 1000" aria-label="Carte de Leonida">
+      <rect width="800" height="1000" fill="#0d0226"/>
+      <g stroke="rgba(255,110,199,.06)" stroke-width="1">
+        <path d="M0,125 H800 M0,250 H800 M0,375 H800 M0,500 H800 M0,625 H800 M0,750 H800 M0,875 H800
+                 M100,0 V1000 M200,0 V1000 M300,0 V1000 M400,0 V1000 M500,0 V1000 M600,0 V1000 M700,0 V1000"/>
+      </g>
+      <text x="24" y="985" class="map-coord">N 25° — LEONIDA — RELEVÉ ATLAS 3.1 (EARLY ACCESS)</text>
+
+      <path class="land" d="M300,35 C380,22 445,55 470,130 C495,205 490,290 515,370
+             C545,460 575,550 585,650 C595,750 575,845 510,900 C445,955 330,960 260,925
+             C190,890 165,800 170,710 C175,610 195,500 200,400 C205,300 230,150 255,95
+             C270,60 280,42 300,35 Z"
+             fill="rgba(255,110,199,.05)" stroke="#ff6ec7" stroke-width="2.5"/>
+
+      <path d="M636,300 C658,295 668,320 666,375 C664,440 670,505 656,565
+             C646,610 622,618 610,585 C596,545 600,470 602,405 C604,350 616,305 636,300 Z"
+             fill="rgba(255,110,199,.12)" stroke="#ff6ec7" stroke-width="2"/>
+      <path d="M585,430 H610 M585,520 H605" stroke="rgba(255,110,199,.5)" stroke-width="3"/>
+
+      <g fill="rgba(255,110,199,.13)" stroke="rgba(255,110,199,.6)" stroke-width="1.5">
+        <ellipse cx="500" cy="930" rx="30" ry="11"/>
+        <ellipse cx="575" cy="950" rx="24" ry="10"/>
+        <ellipse cx="648" cy="962" rx="20" ry="9"/>
+        <ellipse cx="710" cy="972" rx="15" ry="7"/>
+      </g>
+      <path d="M500,930 C560,945 640,960 710,972" fill="none" stroke="rgba(255,110,199,.35)" stroke-width="1.5" stroke-dasharray="8 6"/>
+
+      <path d="M225,430 q45,35 0,70 q-45,35 8,66 q50,30 0,62" fill="none" stroke="rgba(255,110,199,.35)" stroke-width="1.5" stroke-dasharray="4 7"/>
+      <path d="M258,470 q38,28 0,58 q-38,28 6,55" fill="none" stroke="rgba(255,110,199,.22)" stroke-width="1.2" stroke-dasharray="3 6"/>
+
+      <path d="M330,120 L370,60 L410,120 Z" fill="none" stroke="rgba(255,110,199,.6)" stroke-width="1.5"/>
+      <path d="M300,160 L328,116 L356,160 Z" fill="none" stroke="rgba(255,110,199,.35)" stroke-width="1.2"/>
+
+      <g class="roads" stroke="rgba(255,110,199,.3)" fill="none">
+        <path d="M370,900 C390,760 400,620 395,480 C390,360 380,240 370,140" stroke-width="2"/>
+        <path d="M395,480 C470,470 550,460 600,455" stroke-width="1.6"/>
+        <path d="M380,700 C460,690 540,660 608,585" stroke-width="1.6"/>
+      </g>
+
+      <g class="map-labels pink">
+        <text x="330" y="145">MT. KALAGA</text>
+        <text x="205" y="415">GRASSRIVERS</text>
+        <text x="360" y="450">AMBROSIA</text>
+        <text x="250" y="640">PORT GELLHORN</text>
+        <text x="620" y="285" class="big">VICE CITY</text>
+        <text x="505" y="912">LEONIDA KEYS</text>
+      </g>
+      <g id="markersVI" class="markers"></g>
+    </svg>
+
+    <div class="legend" id="legend"></div>
+  </main>
+
+  <article class="poi-card" id="poiCard" hidden>
+    <button class="close" id="cardClose" aria-label="Fermer">×</button>
+    <p class="poi-cat" id="cardCat"></p>
+    <h2 id="cardName"></h2>
+    <p id="cardDesc"></p>
+    <div class="locked-box" id="cardLock" hidden>
+      <p><b>◆ Contenu Vice Pass</b><br>Guide complet, coordonnées exactes et itinéraire pour ce lieu.</p>
+      <a class="btn primary" href="index.html#tarifs">Débloquer — 4,99€/mois</a>
+    </div>
+  </article>
+
+</div>
+
+<script src="map.js" defer></script>
+</body>
+</html>
