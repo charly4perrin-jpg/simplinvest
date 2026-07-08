@@ -295,7 +295,7 @@ const groups = {};
     wheel.position.set(x, -0.16, z);
     hero.add(wheel);
   });
-  hero.position.set(0, 1.1, -2.8);
+  hero.position.set(0, 1.7, -3.4);
   hero.rotation.y = 0.6;
   g.add(hero);
 
@@ -304,8 +304,8 @@ const groups = {};
   for (let i = 0; i < ringN; i++) {
     const a = (i / ringN) * Math.PI * 2;
     ringPos[i * 3] = Math.cos(a) * 1.6;
-    ringPos[i * 3 + 1] = Math.sin(a) * 0.5 + 1.1;
-    ringPos[i * 3 + 2] = -2.8 + Math.sin(a * 3) * 0.3;
+    ringPos[i * 3 + 1] = Math.sin(a) * 0.5 + 1.7;
+    ringPos[i * 3 + 2] = -3.4 + Math.sin(a * 3) * 0.3;
   }
   const ringGeo = new THREE.BufferGeometry();
   ringGeo.setAttribute('position', new THREE.BufferAttribute(ringPos, 3));
@@ -332,17 +332,27 @@ window.addEventListener('pointermove', (e) => {
 });
 
 const clock = new THREE.Clock();
+let lastScrollY = window.scrollY;
+let scrollVel = 0;
 
 function animate() {
   requestAnimationFrame(animate);
   const dt = Math.min(clock.getDelta(), 0.05);
   const time = clock.elapsedTime;
 
+  // scroll-scrub: velocity rolls the camera, page progress dollies it
+  const sy = window.scrollY;
+  scrollVel += ((sy - lastScrollY) - scrollVel) * 0.1;
+  lastScrollY = sy;
+  const frac = window.__scrollFrac ?? 0;
+
   mouseX += (targetX - mouseX) * 0.04;
   mouseY += (targetY - mouseY) * 0.04;
   camera.position.x += (mouseX * 0.4 - camera.position.x) * 0.05;
   camera.position.y += (-mouseY * 0.25 - camera.position.y) * 0.05;
+  camera.position.z = 5 - Math.sin(frac * Math.PI) * 0.5;
   camera.lookAt(0, 0, -1.5);
+  camera.rotation.z = THREE.MathUtils.clamp(scrollVel * 0.0006, -0.05, 0.05);
 
   fadeList.forEach(({ mat, group, base }) => {
     const target = group === groups[activeScene] ? base : 0;

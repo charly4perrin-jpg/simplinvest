@@ -346,6 +346,37 @@
   }
   loop();
 
+  // ---------- word-split titles for staggered reveal ----------
+  document.querySelectorAll('.title').forEach(title => {
+    const words = title.textContent.trim().split(/\s+/);
+    title.textContent = '';
+    words.forEach((word, i) => {
+      const outer = document.createElement('span');
+      outer.className = 'w';
+      const inner = document.createElement('span');
+      inner.className = 'wi';
+      inner.textContent = word;
+      inner.style.setProperty('--d', `${i * 0.07}s`);
+      outer.appendChild(inner);
+      title.appendChild(outer);
+      if (i < words.length - 1) title.appendChild(document.createTextNode(' '));
+    });
+  });
+
+  // ---------- chapter nav dots ----------
+  const chapnav = document.getElementById('chapnav');
+  const navButtons = sections.map((s, i) => {
+    const btn = document.createElement('button');
+    btn.setAttribute('aria-label', s.dataset.word);
+    const label = document.createElement('span');
+    label.className = 'label';
+    label.textContent = s.dataset.word;
+    btn.appendChild(label);
+    btn.addEventListener('click', () => s.scrollIntoView({ behavior: 'smooth' }));
+    chapnav.appendChild(btn);
+    return btn;
+  });
+
   // ---------- scroll-driven chapter switching ----------
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -362,6 +393,8 @@
         }
         current = scene;
         chapNum.textContent = String(idx).padStart(2, '0');
+        document.documentElement.style.setProperty('--accent', entry.target.dataset.accent || '#ff6ec7');
+        navButtons.forEach((b, i) => b.classList.toggle('active', i === idx - 1));
         window.setActive3DScene?.(scene);
       }
     });
@@ -369,9 +402,45 @@
 
   sections.forEach(s => io.observe(s));
 
-  window.addEventListener('scroll', () => {
+  // ---------- scroll: progress bar, bgword parallax, hint ----------
+  const progressBar = document.getElementById('progressBar');
+  const bgwords = sections.map(s => s.querySelector('.bgword'));
+
+  function onScroll() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const frac = max > 0 ? window.scrollY / max : 0;
+    progressBar.style.width = `${frac * 100}%`;
+    window.__scrollFrac = frac;
     scrollHint.classList.toggle('hide', window.scrollY > 80);
+
+    sections.forEach((s, i) => {
+      const rect = s.getBoundingClientRect();
+      if (rect.bottom < -100 || rect.top > window.innerHeight + 100) return;
+      const p = 1 - (rect.top + rect.height / 2) / window.innerHeight; // ~0 entering, ~1 leaving
+      if (bgwords[i]) {
+        bgwords[i].style.transform =
+          `translate(-50%, calc(-50% + ${(p - 0.5) * -120}px)) scale(${1 + p * 0.06})`;
+      }
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ---------- custom neon cursor ----------
+  const cursorDot = document.getElementById('cursorDot');
+  const cursorRing = document.getElementById('cursorRing');
+  let ringX = innerWidth / 2, ringY = innerHeight / 2, dotX = ringX, dotY = ringY;
+  window.addEventListener('pointermove', (e) => {
+    dotX = e.clientX; dotY = e.clientY;
+    cursorDot.style.transform = `translate(${dotX}px, ${dotY}px) translate(-50%,-50%)`;
+    cursorRing.classList.toggle('hovering', !!e.target.closest('button, a'));
   });
+  (function ringLoop() {
+    ringX += (dotX - ringX) * 0.16;
+    ringY += (dotY - ringY) * 0.16;
+    cursorRing.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%,-50%)`;
+    requestAnimationFrame(ringLoop);
+  })();
 
   // ---------- 3D cursor tilt on the active chapter's text block ----------
   window.addEventListener('pointermove', (e) => {
@@ -387,5 +456,12 @@
 
   document.getElementById('restart').addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // ---------- loader ----------
+  const loader = document.getElementById('loader');
+  const ready = document.fonts?.ready ?? Promise.resolve();
+  Promise.all([ready, new Promise(r => setTimeout(r, 1100))]).then(() => {
+    loader.classList.add('done');
   });
 })();

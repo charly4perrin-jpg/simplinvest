@@ -5,9 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LEONIDA — Une histoire de Vice</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d0221'/%3E%3Ctext x='50' y='68' font-size='60' text-anchor='middle' fill='%23ff2e93'%3EV%3C/text%3E%3C/svg%3E">
+<link rel="preload" href="vendor/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="vendor/fonts/allura-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<div class="loader" id="loader">
+  <p class="loader-script">une histoire de</p>
+  <p class="loader-word">VICE</p>
+  <div class="loader-bar"><i></i></div>
+</div>
+
+<div class="progress"><i id="progressBar"></i></div>
 
 <canvas id="bg"></canvas>
 <canvas id="bg3d"></canvas>
@@ -15,83 +25,137 @@
 <div class="grain"></div>
 <div class="vignette"></div>
 
+<div class="cursor" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
 <header class="hud">
   <span class="hud-brand">VICE<span class="dot">•</span></span>
   <span class="hud-counter"><span id="chapNum">01</span>/09</span>
 </header>
 
+<nav class="chapnav" id="chapnav" aria-label="Chapitres"></nav>
+
 <main id="scenes">
 
-  <section class="scene" data-scene="rain" data-title="PROLOGUE">
+  <section class="scene" data-scene="rain" data-accent="#ff6ec7" data-word="PROLOGUE">
+    <span class="bgword" aria-hidden="true">PROLOGUE</span>
     <div class="scene-inner">
-      <p class="eyebrow">LEONIDA, 2026</p>
-      <h1 class="title big">La chaleur ne<br>pardonne jamais.</h1>
-      <p class="sub">Une histoire de Vice.</p>
+      <p class="eyebrow">Leonida, 2026</p>
+      <h1 class="title big">La chaleur ne pardonne jamais.</h1>
+      <p class="sub script">une histoire de Vice</p>
     </div>
   </section>
 
-  <section class="scene" data-scene="dots" data-title="ENCOUNTER">
+  <section class="scene align-right" data-scene="dots" data-accent="#c9a2ff" data-word="ENCOUNTER">
+    <span class="bgword" aria-hidden="true">ENCOUNTER</span>
     <div class="scene-inner">
-      <p class="eyebrow">02 — ENCOUNTER</p>
+      <p class="eyebrow">02 — Encounter</p>
       <h1 class="title">Jason &amp; Lucia</h1>
-      <p class="sub">Deux étrangers. Un seul plan.<br>Aucune règle.</p>
+      <p class="sub">Deux étrangers. Un seul plan. Aucune règle.</p>
     </div>
   </section>
 
-  <section class="scene" data-scene="palms" data-title="SUNSET STRIP">
-    <div class="scene-inner">
-      <p class="eyebrow">03 — SUNSET STRIP</p>
-      <h1 class="title">Vice City ne<br>dort jamais.</h1>
+  <section class="scene align-center" data-scene="palms" data-accent="#ffcf5c" data-word="SUNSET">
+    <span class="bgword" aria-hidden="true">SUNSET</span>
+    <div class="scene-inner center">
+      <p class="eyebrow">03 — Sunset Strip</p>
+      <h1 class="title">Vice City ne dort jamais.</h1>
       <p class="sub">Néons, sable chaud, promesses en carton.</p>
     </div>
   </section>
 
-  <section class="scene" data-scene="grid" data-title="THE JOB">
+  <section class="scene" data-scene="grid" data-accent="#05d9e8" data-word="THE JOB">
+    <span class="bgword" aria-hidden="true">THE&nbsp;JOB</span>
     <div class="scene-inner">
-      <p class="eyebrow">04 — THE JOB</p>
-      <h1 class="title">Un coup.<br>Une seule chance.</h1>
+      <p class="eyebrow">04 — The Job</p>
+      <h1 class="title">Un coup. Une seule chance.</h1>
       <p class="sub">Tout ce qui brille se paie.</p>
     </div>
   </section>
 
-  <section class="scene" data-scene="pursuit" data-title="PURSUIT">
+  <section class="scene align-right" data-scene="pursuit" data-accent="#ff4d6a" data-word="PURSUIT">
+    <span class="bgword" aria-hidden="true">PURSUIT</span>
     <div class="scene-inner">
-      <p class="eyebrow">05 — PURSUIT</p>
-      <h1 class="title">Ils remontent<br>déjà la trace.</h1>
+      <p class="eyebrow">05 — Pursuit</p>
+      <h1 class="title">Ils remontent déjà la trace.</h1>
       <p class="sub">Cours. Ou négocie.</p>
     </div>
   </section>
 
-  <section class="scene" data-scene="cellbars" data-title="TRIAL">
-    <div class="scene-inner">
-      <p class="eyebrow">06 — TRIAL</p>
-      <h1 class="title">Tout le monde<br>paie sa dette.</h1>
+  <section class="scene align-center" data-scene="cellbars" data-accent="#ff9036" data-word="TRIAL">
+    <span class="bgword" aria-hidden="true">TRIAL</span>
+    <div class="scene-inner center">
+      <p class="eyebrow">06 — Trial</p>
+      <h1 class="title">Tout le monde paie sa dette.</h1>
       <p class="sub">La lumière, avant la chute.</p>
     </div>
   </section>
 
-  <section class="scene" data-scene="spiral" data-title="SPIRAL">
+  <section class="scene" data-scene="spiral" data-accent="#b96bff" data-word="SPIRAL">
+    <span class="bgword" aria-hidden="true">SPIRAL</span>
     <div class="scene-inner">
-      <p class="eyebrow">07 — SPIRAL</p>
-      <h1 class="title">Le pouvoir rend<br>toujours fou.</h1>
+      <p class="eyebrow">07 — Spiral</p>
+      <h1 class="title">Le pouvoir rend toujours fou.</h1>
       <p class="sub">Plus on monte, plus vite on tombe.</p>
     </div>
   </section>
 
-  <section class="scene" data-scene="skyline" data-title="VICE">
+  <section class="scene align-right" data-scene="skyline" data-accent="#6ee7ff" data-word="VICE">
+    <span class="bgword" aria-hidden="true">VICE</span>
     <div class="scene-inner">
-      <p class="eyebrow">08 — VICE</p>
-      <h1 class="title">La ville se<br>souvient de tout.</h1>
+      <p class="eyebrow">08 — Vice</p>
+      <h1 class="title">La ville se souvient de tout.</h1>
       <p class="sub">Chaque néon a un prix.</p>
     </div>
   </section>
 
-  <section class="scene" data-scene="logo" data-title="EPILOGUE">
+  <section class="scene align-center" data-scene="logo" data-accent="#ff6ec7" data-word="FINALE">
+    <span class="bgword" aria-hidden="true">FINALE</span>
     <div class="scene-inner center">
-      <p class="eyebrow">09 — EPILOGUE</p>
-      <h1 class="logo-title">GRAND THEFT<br>AUTO <span class="six">VI</span></h1>
-      <p class="sub">Leonida vous attend.</p>
-      <button class="cta" id="restart">REJOUER L'HISTOIRE ↑</button>
+      <p class="eyebrow">09 — Epilogue</p>
+      <h1 class="title logo-line">Grand Theft Auto</h1>
+
+      <svg class="vi-logo" viewBox="0 0 460 260" aria-label="VI">
+        <defs>
+          <linearGradient id="viGrad" x1="0" y1="0" x2="0.2" y2="1">
+            <stop offset="0" stop-color="#ffcf5c"/>
+            <stop offset="0.38" stop-color="#ff9036"/>
+            <stop offset="0.68" stop-color="#ff2e93"/>
+            <stop offset="1" stop-color="#7b2ff7"/>
+          </linearGradient>
+          <clipPath id="viClip">
+            <text x="230" y="228" text-anchor="middle" class="vi-text">VI</text>
+          </clipPath>
+          <g id="palmShape">
+            <path d="M0,0 Q4,-38 -2,-74" fill="none" stroke="#1c0533" stroke-width="7" stroke-linecap="round"/>
+            <g fill="#1c0533">
+              <ellipse cx="-24" cy="-84" rx="26" ry="7" transform="rotate(-24 -24 -84)"/>
+              <ellipse cx="20" cy="-86" rx="26" ry="7" transform="rotate(22 20 -86)"/>
+              <ellipse cx="-16" cy="-94" rx="24" ry="6.5" transform="rotate(-52 -16 -94)"/>
+              <ellipse cx="12" cy="-96" rx="24" ry="6.5" transform="rotate(50 12 -96)"/>
+              <ellipse cx="-2" cy="-98" rx="22" ry="6" transform="rotate(-88 -2 -98)"/>
+              <ellipse cx="0" cy="-80" rx="24" ry="6.5" transform="rotate(4 0 -80)"/>
+            </g>
+          </g>
+        </defs>
+
+        <g clip-path="url(#viClip)">
+          <rect width="460" height="260" fill="url(#viGrad)"/>
+          <circle cx="230" cy="176" r="64" fill="#ffe9a8" opacity="0.85"/>
+          <g stroke="#1c0533" stroke-width="4" opacity="0.5">
+            <line x1="0" y1="188" x2="460" y2="188"/>
+            <line x1="0" y1="203" x2="460" y2="203"/>
+            <line x1="0" y1="217" x2="460" y2="217"/>
+          </g>
+          <use href="#palmShape" transform="translate(150,232) scale(1.05)"/>
+          <use href="#palmShape" transform="translate(320,236) scale(1.25)"/>
+          <use href="#palmShape" transform="translate(238,238) scale(0.8)"/>
+        </g>
+        <text x="230" y="228" text-anchor="middle" class="vi-text vi-outline">VI</text>
+      </svg>
+
+      <p class="sub script">Leonida vous attend</p>
+      <button class="cta" id="restart">Rejouer l'histoire ↑</button>
     </div>
   </section>
 
