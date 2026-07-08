@@ -30,6 +30,10 @@
     <input type="search" id="poiSearch" placeholder="Chercher un lieu…" aria-label="Chercher un lieu">
     <div class="chips" id="chips"></div>
     <p class="count" id="poiCount"></p>
+    <div class="progress-track">
+      <div class="progress-row"><span id="progLabel">0 / 0 explorés</span><b id="progPct">0%</b></div>
+      <div class="progress-bar"><i id="progFill"></i></div>
+    </div>
     <ul class="poi-list" id="poiList"></ul>
     <div class="sidebar-note">
       <b>◆ Vice Pass</b> — les lieux verrouillés (secrets, easter eggs, itinéraires)
@@ -144,6 +148,7 @@
     <p class="poi-cat" id="cardCat"></p>
     <h2 id="cardName"></h2>
     <p id="cardDesc"></p>
+    <button class="btn visit-btn" id="cardVisit">Marquer comme visité</button>
     <div class="locked-box" id="cardLock" hidden>
       <p><b>◆ Contenu Vice Pass</b><br>Guide complet, coordonnées exactes et itinéraire pour ce lieu.</p>
       <a class="btn primary" href="index.html#tarifs">Débloquer — 4,99€/mois</a>

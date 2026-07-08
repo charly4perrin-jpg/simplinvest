@@ -95,6 +95,32 @@ body[data-world="vi"] { --accent: var(--hot-pink); }
 
 .count { font-size: .74rem; color: rgba(245,240,255,.45); letter-spacing: .1em; text-transform: uppercase; }
 
+/* progression tracker */
+.progress-track { display: flex; flex-direction: column; gap: 7px; }
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: .78rem;
+  color: var(--muted);
+}
+.progress-row b { color: var(--accent); font-family: var(--display); font-weight: 400; font-size: 1rem; letter-spacing: .05em; }
+.progress-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.07);
+  overflow: hidden;
+}
+.progress-bar i {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 45%, white));
+  box-shadow: 0 0 10px var(--accent);
+  transition: width .5s cubic-bezier(.19,1,.22,1);
+}
+
 .poi-list {
   list-style: none;
   overflow-y: auto;
@@ -122,6 +148,9 @@ body[data-world="vi"] { --accent: var(--hot-pink); }
   box-shadow: 0 0 8px var(--c, transparent);
 }
 .poi-list li .lock { margin-left: auto; font-size: .7rem; color: var(--gold); }
+.poi-list li .tick { margin-left: auto; color: #3ddc97; font-weight: 700; }
+.poi-list li .tick + .lock { margin-left: 8px; }
+.poi-list li.done .nm { opacity: .5; text-decoration: line-through; text-decoration-color: rgba(61,220,151,.6); }
 
 .sidebar-note {
   font-size: .78rem;
@@ -194,6 +223,8 @@ body[data-world="vi"] { --accent: var(--hot-pink); }
 }
 .marker:hover text, .marker.sel text { fill: rgba(245,240,255,.95); }
 .marker .lockglyph { font-size: 9px; fill: var(--gold); }
+.marker.done circle.dot { fill: #3ddc97; opacity: .55; }
+.marker.done circle.pulse { animation: none; opacity: 0; }
 @keyframes mpulse {
   0% { r: 7; opacity: .8; }
   100% { r: 22; opacity: 0; }
@@ -270,6 +301,21 @@ body[data-world="vi"] { --accent: var(--hot-pink); }
 .locked-box p { font-size: .82rem; color: var(--muted); line-height: 1.55; margin-bottom: 12px; }
 .locked-box b { color: var(--gold); }
 .locked-box .btn { display: block; text-align: center; padding: 11px 18px; font-size: .74rem; }
+
+.visit-btn {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  text-align: center;
+  padding: 12px 18px;
+  font-size: .76rem;
+  cursor: pointer;
+}
+.visit-btn.is-done {
+  border-color: rgba(61,220,151,.6);
+  color: #3ddc97;
+  background: rgba(61,220,151,.08);
+}
 
 /* ---------- mobile ---------- */
 @media (max-width: 900px) {

@@ -68,6 +68,16 @@
   let query = '';
   let selected = null;
 
+  // progression tracker (persisted per world, keyed by POI name)
+  const doneSets = { v: null, vi: null };
+  ['v', 'vi'].forEach(w => {
+    try { doneSets[w] = new Set(JSON.parse(localStorage.getItem('atlas_done_' + w) || '[]')); }
+    catch { doneSets[w] = new Set(); }
+  });
+  function saveDone(w) {
+    try { localStorage.setItem('atlas_done_' + w, JSON.stringify([...doneSets[w]])); } catch {}
+  }
+
   // ---------- dom ----------
   const tabs = { v: document.getElementById('tab-v'), vi: document.getElementById('tab-vi') };
   const maps = { v: document.getElementById('mapV'), vi: document.getElementById('mapVI') };
@@ -81,6 +91,10 @@
   const cardCat = document.getElementById('cardCat');
   const cardDesc = document.getElementById('cardDesc');
   const cardLock = document.getElementById('cardLock');
+  const cardVisit = document.getElementById('cardVisit');
+  const progLabel = document.getElementById('progLabel');
+  const progPct = document.getElementById('progPct');
+  const progFill = document.getElementById('progFill');
 
   // ---------- build chips + legend ----------
   Object.entries(CATS).forEach(([key, c]) => {
@@ -156,12 +170,14 @@
 
   function render() {
     const pois = POIS[world];
+    const done = doneSets[world];
     let shown = 0;
 
     markerLayers[world].querySelectorAll('.marker').forEach((g, i) => {
       const ok = visible(pois[i]);
       g.style.display = ok ? '' : 'none';
       g.classList.toggle('sel', selected === i);
+      g.classList.toggle('done', done.has(pois[i].name));
       if (ok) shown++;
     });
 
@@ -171,12 +187,22 @@
       const li = document.createElement('li');
       li.style.setProperty('--c', CATS[p.cat].color);
       li.classList.toggle('sel', selected === i);
-      li.innerHTML = `<i></i>${p.name}${p.premium ? '<span class="lock">◆ PASS</span>' : ''}`;
+      li.classList.toggle('done', done.has(p.name));
+      li.innerHTML = `<i></i><span class="nm">${p.name}</span>` +
+        (done.has(p.name) ? '<span class="tick">✓</span>' : '') +
+        (p.premium ? '<span class="lock">◆ PASS</span>' : '');
       li.addEventListener('click', () => select(world, i));
       list.appendChild(li);
     });
 
     countEl.textContent = `${shown} lieu${shown > 1 ? 'x' : ''} affiché${shown > 1 ? 's' : ''}`;
+
+    const total = pois.length;
+    const doneCount = pois.filter(p => done.has(p.name)).length;
+    const pct = total ? Math.round((doneCount / total) * 100) : 0;
+    progLabel.textContent = `${doneCount} / ${total} explorés`;
+    progPct.textContent = `${pct}%`;
+    progFill.style.width = `${pct}%`;
   }
 
   // ---------- selection / detail card ----------
@@ -187,9 +213,26 @@
     cardCat.textContent = CATS[p.cat].label + (p.premium ? ' — Vice Pass' : '');
     cardDesc.textContent = p.desc;
     cardLock.hidden = !p.premium;
+    updateVisitBtn(p);
     card.hidden = false;
     render();
   }
+
+  function updateVisitBtn(p) {
+    const isDone = doneSets[world].has(p.name);
+    cardVisit.textContent = isDone ? '✓ Visité — annuler' : 'Marquer comme visité';
+    cardVisit.classList.toggle('is-done', isDone);
+  }
+
+  cardVisit.addEventListener('click', () => {
+    if (selected === null) return;
+    const p = POIS[world][selected];
+    const done = doneSets[world];
+    done.has(p.name) ? done.delete(p.name) : done.add(p.name);
+    saveDone(world);
+    updateVisitBtn(p);
+    render();
+  });
   document.getElementById('cardClose').addEventListener('click', () => {
     card.hidden = true;
     selected = null;
